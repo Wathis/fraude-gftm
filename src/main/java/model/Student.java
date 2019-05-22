@@ -1,13 +1,8 @@
-package parser;//TODO changer de package
+package model;//TODO changer de package
 
-import javax.swing.tree.DefaultMutableTreeNode;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
-
+import java.util.HashMap;
 
 public class Student {
-
 
     private String name;
 
@@ -15,11 +10,10 @@ public class Student {
 
     private HashMap<String, Double> scores;
 
-
     public Student(String name, String directoryPath) {
         this.name = name;
         this.directoryPath = directoryPath;
-        this.scores = new HashMap<>();
+        this.scores = new HashMap<String,Double>();
     }
 
     public String getName() {
