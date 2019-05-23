@@ -81,23 +81,29 @@ public class Main {
 
 
     public static void main(String[] args) throws DiffException, IOException, PatchFailedException {
-        ModelSuppressionFilter.compute(MODEL_PROF,Arrays.asList(STUDENT_2));
+        List<List<String>> studentsMinusProfessor = ModelSuppressionFilter.compute(MODEL_PROF,Arrays.asList(STUDENT_2));
 
-        DiffPatchMatch diffPatchMatch = new DiffPatchMatch();
+        System.out.println(studentsMinusProfessor);
 
-        LinkedList<DiffPatchMatch.Diff> diffs = diffPatchMatch.diff_main(CODE_PROF,CODE_ELEVE);
-
-        System.out.println(diffs);
-        for (DiffPatchMatch.Diff diff : diffs) {
-            if (diff.operation == DiffPatchMatch.Operation.EQUAL) {
+//
+//        [GOOGLE CHAR DIFF]
+//
+//        DiffPatchMatch diffPatchMatch = new DiffPatchMatch();
+//
+//        LinkedList<DiffPatchMatch.Diff> diffs = diffPatchMatch.diff_main(CODE_PROF,CODE_ELEVE);
+//
+//        System.out.println(diffs);
+//        for (DiffPatchMatch.Diff diff : diffs) {
+//            if (diff.operation == DiffPatchMatch.Operation.EQUAL) {
 //                System.out.println("= " + diff.text);
-            }
-            if (diff.operation == DiffPatchMatch.Operation.INSERT) {
-                System.out.print(diff.text);
-            }
-            if (diff.operation == DiffPatchMatch.Operation.DELETE) {
-            }
-        }
+//            }
+//            if (diff.operation == DiffPatchMatch.Operation.INSERT) {
+//                System.out.print(diff.text);
+//            }
+//            if (diff.operation == DiffPatchMatch.Operation.DELETE) {
+//                System.out.println("-" + diff.text);
+//            }
+//        }
 
     }
 }

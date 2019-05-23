@@ -34,7 +34,6 @@ public class ModelSuppressionFilter {
                         studentCode.addAll(delta.getTarget().getLines());
                         break;
                 }
-                System.out.println(delta);
             }
             studentsWithoutProfessorCode.add(studentCode);
         });
