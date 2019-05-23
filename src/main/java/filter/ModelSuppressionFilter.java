@@ -11,30 +11,34 @@ import java.util.List;
 public class ModelSuppressionFilter {
 
 
-    public static void compute(List<String> professorRows, List<List<String>> students) {
+    public static List<List<String>> compute(List<String> professorRows, List<List<String>> students) {
+        List<List<String>> studentsWithoutProfessorCode = new LinkedList<>();
         students.stream().forEach(studentRows -> {
             Patch<String> patch = null;
             try {
                 patch = DiffUtils.diff(professorRows, studentRows);
             } catch (DiffException e) {
-                System.out.println("");
+                System.out.println(e.getMessage());
+                return;
             }
-            List<String> result = new LinkedList<>();
+            List<String> studentCode = new LinkedList<>();
             for (AbstractDelta<String> delta : patch.getDeltas()) {
                 switch (delta.getType()) {
                     case CHANGE:
-                        result.addAll(delta.getTarget().getLines());
+                        studentCode.addAll(delta.getTarget().getLines());
                         break;
                     case DELETE:
-                        result.addAll(delta.getTarget().getLines());
+                        studentCode.addAll(delta.getSource().getLines());
                         break;
                     case INSERT:
-                        result.addAll(delta.getTarget().getLines());
+                        studentCode.addAll(delta.getTarget().getLines());
                         break;
                 }
                 System.out.println(delta);
             }
+            studentsWithoutProfessorCode.add(studentCode);
         });
+        return studentsWithoutProfessorCode;
     }
 
 
