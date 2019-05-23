@@ -4,12 +4,14 @@ import com.github.difflib.patch.AbstractDelta;
 import com.github.difflib.patch.Patch;
 import com.github.difflib.patch.PatchFailedException;
 import filter.ModelSuppressionFilter;
+import model.AuthorType;
+import model.File;
+import model.Student;
 import utils.DiffPatchMatch;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -81,9 +83,11 @@ public class Main {
 
 
     public static void main(String[] args) throws DiffException, IOException, PatchFailedException {
-        List<List<String>> studentsMinusProfessor = ModelSuppressionFilter.compute(MODEL_PROF,Arrays.asList(STUDENT_2));
+        Student student = new Student("","");
+        student.setFiles(Arrays.asList(new File(STUDENT_2, AuthorType.STUDENT,student)));
+        List<Student> studentsMinusProfessor = ModelSuppressionFilter.compute(MODEL_PROF,Arrays.asList(student));
 
-        System.out.println(studentsMinusProfessor);
+        System.out.println(studentsMinusProfessor.get(0).getFilesLines());
 
 //
 //        [GOOGLE CHAR DIFF]

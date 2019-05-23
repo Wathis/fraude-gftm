@@ -1,6 +1,9 @@
 package model;//TODO changer de package
 
 import java.util.HashMap;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Student {
 
@@ -10,10 +13,29 @@ public class Student {
 
     private HashMap<String, Double> scores;
 
+    private Collection<File> files;
+
+    private List<String> fileLines;
+
     public Student(String name, String directoryPath) {
         this.name = name;
         this.directoryPath = directoryPath;
         this.scores = new HashMap<String,Double>();
+    }
+
+    public void setFileLines(List<String> fileLines) {
+        this.fileLines = fileLines;
+    }
+
+    public List<String> getFilesLines() {
+        if (fileLines != null) {
+            return fileLines;
+        }
+        List<String> fileLines = new LinkedList<>();
+        for(File file : files) {
+            fileLines.addAll(file.getLines());
+        }
+        return fileLines;
     }
 
     public String getName() {
@@ -46,5 +68,13 @@ public class Student {
 
     public String getDirectoryPath() {
         return directoryPath;
+    }
+
+    public Collection<File> getFiles() {
+        return this.files;
+    }
+
+    public void setFiles(Collection<File> files) {
+        this.files = files;
     }
 }
