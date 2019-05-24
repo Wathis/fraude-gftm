@@ -21,7 +21,6 @@ public class KeywordFilter implements FilterVisitor {
 
     private String keywords[];
 
-
     public KeywordFilter() {
         setUpKeywordLanguage(CompatibleLanguage.JAVA);
     }
@@ -29,7 +28,6 @@ public class KeywordFilter implements FilterVisitor {
     public KeywordFilter(CompatibleLanguage language) {
         setUpKeywordLanguage(language);
     }
-
 
     private void setUpKeywordLanguage(CompatibleLanguage language) {
         switch (language) {
@@ -62,10 +60,14 @@ public class KeywordFilter implements FilterVisitor {
                 if (newCodeLine.indexOf(keyword) == 0) {
                     newCodeLine = newCodeLine.replace(keyword + " ", "XXX ");
                 }
-                if (keyword.equals(newCodeLine.substring(newCodeLine.length() - keyword.length(), newCodeLine.length() - 1))) {
-                    newCodeLine = newCodeLine.replace(" " + keyword, "XXX");
+                String endWord =  newCodeLine.substring(newCodeLine.length() - keyword.length());
+                if (keyword.equals(endWord)) {
+                    newCodeLine = newCodeLine.replace(" " + keyword, " XXX");
                 }
                 newCodeLine = newCodeLine.replace(" " + keyword + " ", "XXX");
+            }
+            if (newCodeLine.length() == keyword.length()) {
+                newCodeLine = "XXX";
             }
         }
         return newCodeLine;
