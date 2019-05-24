@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.jgit.util.FileUtils;
@@ -74,12 +75,13 @@ public class FileReader {
 		String directoryPath = student.getDirectoryPath();
 		File directory = new File(directoryPath);
 		// File system
-		Collection<File> files = getFilesFromDirectory(directory);
+		List<File> files = getFilesFromDirectory(directory);
 		// File of our model
-		Collection<model.File> studentFiles = new ArrayList<model.File>();
+		List<model.File> studentFiles = new ArrayList<model.File>();
 		for (File file : files) {
-			studentFiles.add(new model.File(getLinesFromFile(file), AuthorType.STUDENT, student));
+			studentFiles.add(new model.File(file.getName(),getLinesFromFile(file), AuthorType.STUDENT, student));
 		}
+		sortListAlphabetically(studentFiles);
 		student.setFiles(studentFiles);
 	}
 
@@ -90,8 +92,8 @@ public class FileReader {
 	 * @param directory
 	 * @return
 	 */
-	private static Collection<File> getFilesFromDirectory(File directory) {
-		Collection<File> files = new ArrayList<File>();
+	private static List<File> getFilesFromDirectory(File directory) {
+		List<File> files = new ArrayList<File>();
 		// Get the name of all the child in the directory
 		String[] nameChilden = directory.list();
 
@@ -101,7 +103,9 @@ public class FileReader {
 			// list
 			if (fileChild.isDirectory()) {
 				files.addAll(getFilesFromDirectory(fileChild));
-			} else {
+			}
+			// Temp to only get source
+			if(nameFile.contains(".java")){
 				files.add(fileChild);
 			}
 		}
@@ -131,5 +135,9 @@ public class FileReader {
 		}
 		return lines;
 
+	}
+
+	private static void sortListAlphabetically(List<model.File> studentFiles){
+		studentFiles.sort(Comparator.comparing(model.File::getName));
 	}
 }
