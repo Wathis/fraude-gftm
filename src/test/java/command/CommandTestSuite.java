@@ -7,7 +7,7 @@ import org.junit.runners.Suite;
 
 @Suite.SuiteClasses({
         CalculatorCommandFactoryTest.class,
-        SimilarWordOrderedCommandTest.class
+        SimilarCodeCommandTest.class
 })
 public class CommandTestSuite {
 

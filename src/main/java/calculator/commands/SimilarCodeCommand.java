@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class SimilarWordOrderedCommand implements IFraudCalculatorCommand {
+public class SimilarCodeCommand implements IFraudCalculatorCommand {
 
     /**
      * The student code must be formatted for this command
