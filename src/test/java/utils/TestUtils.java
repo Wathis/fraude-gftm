@@ -69,6 +69,6 @@ public class TestUtils {
                     "}\n";
 
 
-    public static final String MODEL_PROF_MINUS_STUDENT_2 = "\"[salut = salut + 1;, // Je met un commentaire, if (salut > 0) {,    salut = salut + 1;, System.out.println(\\\"Voici salut : \\\" + salut), }, // code d'un eleve qui a copié]\"";
+    public static final String MODEL_PROF_MINUS_STUDENT_2 = "[salut = salut + 1;, // Je met un commentaire, if (salut > 0) {,    salut = salut + 1;, System.out.println(\"Voici salut : \" + salut), }, // code d'un eleve qui a copié]";
 
 }
