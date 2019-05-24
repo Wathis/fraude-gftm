@@ -40,7 +40,7 @@ public class ModelSuppressionFilterTest {
     @Test
     public void testNominalCase() {
         Student student = new Student("","");
-        student.setFiles(Arrays.asList(new File(studentCode, AuthorType.STUDENT,student)));
+        student.setFiles(Arrays.asList(new File("",studentCode, AuthorType.STUDENT,student)));
         Exam exam = new Exam(profCode,Arrays.asList(student));
         exam.accept(new ModelSuppressionFilter());
         String fileLines = exam.getStudents().get(0).getFilesLines().toString();

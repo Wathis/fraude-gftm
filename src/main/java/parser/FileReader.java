@@ -98,7 +98,7 @@ public class FileReader {
 		String[] nameChilden = directory.list();
 
 		for (String nameFile : nameChilden) {
-			File fileChild = new File(directory.getAbsolutePath() + "\\" + nameFile);
+			File fileChild = new File(directory.getAbsolutePath() + File.separator + nameFile);
 			// If it's a directory, recall the method and add the result to the
 			// list
 			if (fileChild.isDirectory()) {

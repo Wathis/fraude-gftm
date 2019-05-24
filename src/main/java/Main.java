@@ -10,6 +10,7 @@ import model.AuthorType;
 import model.Exam;
 import model.File;
 import model.Student;
+import parser.FileReader;
 import utils.DiffPatchMatch;
 
 import java.io.IOException;
@@ -23,6 +24,10 @@ public class Main {
 
     public static void main(String[] args) throws DiffException, IOException, PatchFailedException {
 
+
+        Student student = new Student("PI_2017_TP03Note_ABDEALY_mickael","/Users/mathisdelaunay/Desktop");
+        FileReader.addListOfFilesToStudent(student);
+        System.out.println(student);
 
 //
 //        [GOOGLE CHAR DIFF]
