@@ -6,13 +6,13 @@ public class File {
 	private String name;
 	private Collection<String> lines;
 	private AuthorType authorType;
-	private Student author;
+	private Person author;
 
-	public File(String name, Collection<String> lines, AuthorType authorType, Student author) {
+	public File(String name, Collection<String> lines, AuthorType authorType, Person person) {
 		this.name = name;
 		this.lines = lines;
 		this.authorType = authorType;
-		this.author = author;
+		this.author = person;
 	}
 
 	public String getName() {
@@ -39,11 +39,11 @@ public class File {
 		this.authorType = authorType;
 	}
 
-	public Student getAuthor() {
+	public Person getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(Student author) {
+	public void setAuthor(Person author) {
 		this.author = author;
 	}
 }
