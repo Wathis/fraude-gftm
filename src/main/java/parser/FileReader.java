@@ -11,6 +11,7 @@ public class FileReader {
 
 	public static Collection<String> parseFile(String fileName) throws Exception {
 
+		// Si fichier commence par . -> fichier de conf
 		FileInputStream fileStream = null;
 		BufferedReader br = null;
 

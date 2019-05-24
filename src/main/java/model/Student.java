@@ -1,4 +1,4 @@
-package model;//TODO changer de package
+package model;
 
 import java.util.HashMap;
 import java.util.Collection;
