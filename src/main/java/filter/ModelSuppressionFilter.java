@@ -4,19 +4,22 @@ import com.github.difflib.DiffUtils;
 import com.github.difflib.algorithm.DiffException;
 import com.github.difflib.patch.AbstractDelta;
 import com.github.difflib.patch.Patch;
+import model.Exam;
 import model.Student;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class ModelSuppressionFilter {
+public class ModelSuppressionFilter implements FilterVisitor {
 
-
-    public static List<Student> compute(List<String> professorRows, List<Student> students) {
+    @Override
+    public void visit(Exam exam) {
+        List<String> professorLines = exam.getProfessorLines();
+        List<Student> students = exam.getStudents();
         students.stream().forEach(student -> {
             Patch<String> patch = null;
             try {
-                patch = DiffUtils.diff(professorRows, student.getFilesLines());
+                patch = DiffUtils.diff(professorLines, student.getFilesLines());
             } catch (DiffException e) {
                 System.out.println(e.getMessage());
                 return;
@@ -37,7 +40,8 @@ public class ModelSuppressionFilter {
             }
             student.setFileLines(studentLines);
         });
-        return students;
+        exam.setProfessorLines(professorLines);
+        exam.setStudents(students);
     }
 
 

@@ -4,7 +4,9 @@ import com.github.difflib.patch.AbstractDelta;
 import com.github.difflib.patch.Patch;
 import com.github.difflib.patch.PatchFailedException;
 import filter.ModelSuppressionFilter;
+import filter.SpaceSeparatorFilter;
 import model.AuthorType;
+import model.Exam;
 import model.File;
 import model.Student;
 import utils.DiffPatchMatch;
@@ -85,9 +87,10 @@ public class Main {
     public static void main(String[] args) throws DiffException, IOException, PatchFailedException {
         Student student = new Student("","");
         student.setFiles(Arrays.asList(new File(STUDENT_2, AuthorType.STUDENT,student)));
-        List<Student> studentsMinusProfessor = ModelSuppressionFilter.compute(MODEL_PROF,Arrays.asList(student));
-
-        System.out.println(studentsMinusProfessor.get(0).getFilesLines());
+        Exam exam = new Exam(MODEL_PROF,Arrays.asList(student));
+        exam.accept(new ModelSuppressionFilter());
+        exam.accept(new SpaceSeparatorFilter());
+        System.out.println(exam.getStudents().get(0).getFilesLines());
 
 //
 //        [GOOGLE CHAR DIFF]
