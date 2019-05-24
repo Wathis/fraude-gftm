@@ -1,12 +1,20 @@
 package calculator;
 
+import model.Exam;
+import model.Student;
+
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class CalculatorCommandFactory {
     private final HashMap<String, IFraudCalculatorCommand> commands;
+    private Exam exam;
+    private Student currentStudent;
 
-    private CalculatorCommandFactory() {
+    private CalculatorCommandFactory(Exam exam, Student currentStudent) {
         this.commands = new HashMap<>();
+        this.exam = exam;
+        this.currentStudent = currentStudent;
     }
 
     public void addCommand(String name, IFraudCalculatorCommand command) {
@@ -15,19 +23,27 @@ public class CalculatorCommandFactory {
 
     public void removeCommand(String name) { this.commands.remove(name); }
 
-    public double executeCommand(String name) {
+    public Double[] executeCommand(String name) {
         if (this.commands.containsKey(name) ) {
-            return this.commands.get(name).execute();
+            return this.commands.get(name).execute(exam,currentStudent);
         }
-        return -1;
+        return null;
     }
 
-    public double executeAllCommands() {
+    public Double[] executeAllCommands() {
         if (commands.size() == 0) {
-            return 0;
+            return null;
         }
-        double score = commands.keySet().stream().mapToDouble(this::executeCommand).sum();
-        return score / commands.size();
+        Double[] scores = new Double[exam.getStudents().size()];
+        commands.keySet().forEach(commandName -> {
+            Double[] commandScores = executeCommand(commandName);
+            if (commandScores != null) {
+                for (int i = 0 ; i < scores.length ; i++) {
+                    scores[i] += commandScores[i];
+                }
+            }
+        });
+        return scores;
     }
 
     public void listCommands() {
@@ -35,8 +51,8 @@ public class CalculatorCommandFactory {
         this.commands.keySet().stream().forEach(System.out::println);
     }
 
-    public static CalculatorCommandFactory init() {
-        CalculatorCommandFactory cf = new CalculatorCommandFactory();
+    public static CalculatorCommandFactory init(Exam exam, Student currentStudent) {
+        CalculatorCommandFactory cf = new CalculatorCommandFactory(exam,currentStudent);
         //PUT SOME DEFAULT COMMANDS
         return cf;
     }

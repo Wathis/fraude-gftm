@@ -1,9 +1,10 @@
 package calculator;
 
+import model.Exam;
+import model.Student;
+
 public interface IFraudCalculatorCommand {
 
-
-    double execute();
-
+    Double[] execute(Exam exam, Student currentStudent);
 
 }

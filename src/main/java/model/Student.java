@@ -23,6 +23,12 @@ public class Student {
         this.scores = new HashMap<String,Double>();
     }
 
+    public Student(String name, String directoryPath, List<File> files) {
+        this.name = name;
+        this.directoryPath = directoryPath;
+        this.files = files;
+    }
+
     public void setFileLines(List<String> fileLines) {
         this.fileLines = fileLines;
     }

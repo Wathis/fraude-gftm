@@ -44,22 +44,3 @@ public class KeywordFilterTest {
         Assert.assertEquals(expected, stringWithoutKeywords);
     }
 }
-//
-//        [GOOGLE CHAR DIFF]
-//
-//        DiffPatchMatch diffPatchMatch = new DiffPatchMatch();
-//
-//        LinkedList<DiffPatchMatch.Diff> diffs = diffPatchMatch.diff_main(CODE_PROF,CODE_ELEVE);
-//
-//        System.out.println(diffs);
-//        for (DiffPatchMatch.Diff diff : diffs) {
-//            if (diff.operation == DiffPatchMatch.Operation.EQUAL) {
-//                System.out.println("= " + diff.text);
-//            }
-//            if (diff.operation == DiffPatchMatch.Operation.INSERT) {
-//                System.out.print(diff.text);
-//            }
-//            if (diff.operation == DiffPatchMatch.Operation.DELETE) {
-//                System.out.println("-" + diff.text);
-//            }
-//        }

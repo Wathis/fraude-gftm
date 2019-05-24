@@ -9,7 +9,7 @@ import org.junit.runners.Suite;
 
 @Suite.SuiteClasses({
         KeywordFilterTest.class,
-        ModelSuppressionFilter.class,
+        ModelSuppressionFilterTest.class,
 })
 public class FilterTestSuite {
 

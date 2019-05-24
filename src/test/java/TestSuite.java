@@ -1,3 +1,4 @@
+import command.CommandTestSuite;
 import filter.FilterTestSuite;
 import org.junit.Test;
 
@@ -8,6 +9,7 @@ import org.junit.runners.Suite;
 
 @Suite.SuiteClasses({
         FilterTestSuite.class,
+        CommandTestSuite.class,
 })
 public class TestSuite {
 
