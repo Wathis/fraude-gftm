@@ -15,5 +15,4 @@ public class CalculatorCommandFactoryTest {
         Assert.assertEquals(score,0,0.01);
     }
 
-
 }
