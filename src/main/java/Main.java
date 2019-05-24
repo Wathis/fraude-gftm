@@ -3,6 +3,7 @@ import com.github.difflib.algorithm.DiffException;
 import com.github.difflib.patch.AbstractDelta;
 import com.github.difflib.patch.Patch;
 import com.github.difflib.patch.PatchFailedException;
+import filter.KeywordFilter;
 import filter.ModelSuppressionFilter;
 import filter.SpaceSeparatorFilter;
 import model.AuthorType;
@@ -90,6 +91,7 @@ public class Main {
         Exam exam = new Exam(MODEL_PROF,Arrays.asList(student));
         exam.accept(new ModelSuppressionFilter());
         exam.accept(new SpaceSeparatorFilter());
+        exam.accept(new KeywordFilter());
         System.out.println(exam.getStudents().get(0).getFilesLines());
 
 //

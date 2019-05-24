@@ -16,7 +16,7 @@ public class ModelSuppressionFilter implements FilterVisitor {
     public void visit(Exam exam) {
         List<String> professorLines = exam.getProfessorLines();
         List<Student> students = exam.getStudents();
-        students.stream().forEach(student -> {
+        students.forEach(student -> {
             Patch<String> patch = null;
             try {
                 patch = DiffUtils.diff(professorLines, student.getFilesLines());
