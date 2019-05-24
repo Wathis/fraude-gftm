@@ -7,40 +7,66 @@ import model.File;
 import model.Student;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static utils.TestUtils.MODEL_PROF;
 import static utils.TestUtils.STUDENT_1;
 import static utils.TestUtils.STUDENT_2;
 
+@RunWith(Parameterized.class)
 public class SimilarCodeCommandTest {
 
+    @Parameterized.Parameters(name = "{2}")
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+                {
+                    Arrays.asList(
+                            "{",
+                            "int azert = 0;",
+                            "}"
+                    ), Arrays.asList(
+                            "{",
+                            "int uiopq = 0;",
+                            "}"
+                    ),
+                    0.72 // Because of \n added
+                }, {
+                    Arrays.asList(
+                            "{",
+                            "}"
+                    ), Arrays.asList(
+                            "{",
+                            "}"
+                    ),
+                    1
+                },
+        });
+    }
 
-    public static final List<String> FIRST_CODE = Arrays.asList(
-            "{",
-            "int azert = 0;",
-            "}"
-    );
+    @Parameterized.Parameter
+    public List<String> firstCode;
 
-    public static final List<String> SECOND_CODE = Arrays.asList(
-            "{",
-            "int uiopq = 0;",
-            "}"
-    );
+    @Parameterized.Parameter(1)
+    public List<String> secondCode;
 
+    @Parameterized.Parameter(2)
+    public double expectedScore;
 
     @Test
     public void testExecute() {
         Student firstStudent = new Student("","");
-        firstStudent.setFiles(Arrays.asList(new File("",FIRST_CODE, AuthorType.STUDENT,firstStudent)));
+        firstStudent.setFiles(Arrays.asList(new File("",firstCode, AuthorType.STUDENT,firstStudent)));
         Student secondStudent = new Student("","");
-        secondStudent.setFiles(Arrays.asList(new File("",SECOND_CODE, AuthorType.STUDENT,secondStudent)));
+        secondStudent.setFiles(Arrays.asList(new File("",secondCode, AuthorType.STUDENT,secondStudent)));
         Exam exam = new Exam(MODEL_PROF,Arrays.asList(firstStudent,secondStudent));
         SimilarCodeCommand similarCodeCommand = new SimilarCodeCommand();
         Double[] scores  = similarCodeCommand.execute(exam,firstStudent);
-        Assert.assertEquals(0.72,scores[1],0.01); // Because of \n added
+        Assert.assertEquals(expectedScore,scores[1],0.01);
     }
 }
 
