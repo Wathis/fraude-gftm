@@ -1,5 +1,6 @@
 package command;
 
+import calculator.commands.OrdonateWordCommand;
 import calculator.commands.SimilarCodeCommand;
 import model.AuthorType;
 import model.Exam;
@@ -66,6 +67,18 @@ public class SimilarCodeCommandTest {
         Exam exam = new Exam(MODEL_PROF,Arrays.asList(firstStudent,secondStudent));
         SimilarCodeCommand similarCodeCommand = new SimilarCodeCommand();
         Double[] scores  = similarCodeCommand.execute(exam,firstStudent);
+        Assert.assertEquals(expectedScore,scores[1],0.01);
+    }
+
+    @Test
+    public void testExecuteOrdonateCommand() {
+        Student firstStudent = new Student("","");
+        firstStudent.setFiles(Arrays.asList(new File("",firstCode, AuthorType.STUDENT,firstStudent)));
+        Student secondStudent = new Student("","");
+        secondStudent.setFiles(Arrays.asList(new File("",secondCode, AuthorType.STUDENT,secondStudent)));
+        Exam exam = new Exam(MODEL_PROF,Arrays.asList(firstStudent,secondStudent));
+        OrdonateWordCommand ordonateWordCommand = new OrdonateWordCommand();
+        Double[] scores  = ordonateWordCommand.execute(exam,firstStudent);
         Assert.assertEquals(expectedScore,scores[1],0.01);
     }
 }
