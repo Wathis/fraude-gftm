@@ -34,8 +34,9 @@ public class SimilarCodeCommandTest {
                             "int uiopq = 0;",
                             "}"
                     ),
-                    0.72 // Because of \n added
-                }, {
+                    0.75
+                },
+                {
                     Arrays.asList(
                             "{",
                             "}"
@@ -44,6 +45,28 @@ public class SimilarCodeCommandTest {
                             "}"
                     ),
                     1
+                },
+                {
+                    Arrays.asList(
+                            "private static void checkDirectory(File directory) {",
+                            "if (!directory.exists()) {",
+                            "directory.mkdir();",
+                            "} else {",
+                            "cleanDirectory(directory);",
+                            "directory.mkdir();",
+                            "}",
+                            "}"
+                    ), Arrays.asList(
+                            " try{",
+                            " Launcher.compareStudents();",
+                            "String path =  XlsWritter.write();",
+                            "text.setText(\"Un fichier comparatif est disponible: \\n\"+path);",
+                            "//scene.setRoot(new StudentView(scene));",
+                            "} catch(Exception e){",
+                            "e.printStackTrace();",
+                            "},"
+                    ),
+                    0
                 },
         });
     }
@@ -66,7 +89,7 @@ public class SimilarCodeCommandTest {
         Exam exam = new Exam(MODEL_PROF,Arrays.asList(firstStudent,secondStudent));
         SimilarCodeCommand similarCodeCommand = new SimilarCodeCommand();
         Double[] scores  = similarCodeCommand.execute(exam,firstStudent);
-        Assert.assertEquals(expectedScore,scores[1],0.01);
+        Assert.assertEquals(expectedScore,scores[1],0.1);
     }
 }
 
