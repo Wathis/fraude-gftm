@@ -30,7 +30,7 @@ public class SimilarCodeCommand implements IFraudCalculatorCommand {
 
                 for (DiffPatchMatch.Diff diff : diffs) {
                     if (diff.operation == DiffPatchMatch.Operation.EQUAL) {
-                        if (diff.text.length() > 1) // Avoiding one character comparison
+                        if (diff.text.length() > 5) // Considering that under 5 character it is not a bloc of code
                             score += diff.text.length();
                         System.out.println("[=] " + diff.text);
                     }
