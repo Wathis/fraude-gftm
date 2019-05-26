@@ -1,6 +1,7 @@
 package parser;
 
 import model.Student;
+import model.Teacher;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,7 +11,8 @@ import java.util.zip.ZipInputStream;
 
 /**
  * This class permits to take a zip archive and to extract all the file to a
- * destination. Create the instance of Student during the process. This list is static
+ * destination. Create the instance of Student during the process. This list is
+ * static
  *
  * @author Thomas
  *
@@ -27,6 +29,8 @@ public class Unzipper {
 	 */
 	private static List<Student> students;
 
+	private static Teacher teacher;
+
 	private Unzipper() {
 		throw new IllegalStateException("Utility class");
 	}
@@ -36,8 +40,16 @@ public class Unzipper {
 	 *
 	 * @return the List of students
 	 */
-	static List<Student> getStudents() {
+	public static List<Student> getStudents() {
 		return students;
+	}
+
+	/**
+	 * get the teacher to access to the path the model
+	 * @return
+	 */
+	public static Teacher getTeacher(){
+		return teacher;
 	}
 
 	/**
@@ -50,7 +62,8 @@ public class Unzipper {
 	 *            the path to save unzip files
 	 * @throws IOException
 	 */
-	static void unzip(String zipFilePath, String destDirectory, boolean recursive) throws IOException {
+	public static void unzip(String zipFilePath, String destDirectory, boolean recursive, boolean modele)
+			throws IOException {
 
 		if (students == null) {
 			students = new ArrayList<Student>();
@@ -64,8 +77,7 @@ public class Unzipper {
 
 			// iterates over entries in the zip file
 			while (entry != null) {
-				createFiles(destDirectory, zipIn, entry, recursive);
-
+				createFiles(destDirectory, zipIn, entry, recursive, modele);
 				zipIn.closeEntry();
 				entry = zipIn.getNextEntry();
 			}
@@ -91,46 +103,59 @@ public class Unzipper {
 	 *            the zip entry
 	 * @throws IOException
 	 */
-	private static void createFiles(String destDirectory, ZipInputStream zipIn, ZipEntry entry, boolean recursive)
-			throws IOException {
+	private static void createFiles(String destDirectory, ZipInputStream zipIn, ZipEntry entry, boolean recursive,
+			boolean modele) throws IOException {
 
 		String filePath = destDirectory + File.separator + entry.getName();
-
 		if (!entry.isDirectory()) {
 
 			boolean isZipFile = filePath.endsWith(".zip");
-			boolean isJavaFile = filePath.endsWith(".java");
-
-			if (isZipFile || isJavaFile) {
-
-				writeFile(zipIn, filePath);
-
-				if (recursive) {
-					File file = new File(filePath);
-
-					String parts[] = entry.getName().split("/");
-					String studentName;
-
-					if (parts.length > 1) {
-						studentName = parts[1].split("_")[0];
-					} else {
-						studentName = entry.getName().split("_")[0];
-					}
-
-					String studentDir = file.getParentFile().getAbsolutePath() + "/" + studentName;
-					File dir = new File(studentDir);
-					dir.mkdir();
-
-					students.add(new Student(studentName, studentDir));
-
-					unzip(filePath, studentDir, false);
-				}
+			if (modele && (teacher == null)) {
+				File file = new File(filePath);
+				String modeleDir = file.getParentFile().getAbsolutePath();
+				File dir = new File(modeleDir);
+				dir.mkdir();
+				teacher = new Teacher("modele", modeleDir);
 			}
-
+			if (isZipFile) {
+				createParent(filePath);
+				writeFile(zipIn, filePath);
+				if (recursive) {
+					String studentDir = addStudentToList(entry, filePath);
+					unzip(filePath, studentDir, false, false);
+				}
+			} else {
+				writeFile(zipIn, filePath);
+			}
 		} else {
 			File dir = new File(filePath);
 			dir.mkdir();
 		}
+	}
+
+	private static String addStudentToList(ZipEntry entry, String filePath) {
+		File file = new File(filePath);
+
+		String studentName = getStudentName(entry);
+
+		String studentDir = file.getParentFile().getAbsolutePath() + "/" + studentName;
+		File dir = new File(studentDir);
+		dir.mkdir();
+
+		students.add(new Student(studentName, studentDir));
+		return studentDir;
+	}
+
+	private static String getStudentName(ZipEntry entry) {
+		String parts[] = entry.getName().split("/");
+		String studentName;
+
+		if (parts.length > 1) {
+			studentName = parts[1].split("_")[0];
+		} else {
+			studentName = entry.getName().split("_")[0];
+		}
+		return studentName;
 	}
 
 	/**
@@ -143,9 +168,7 @@ public class Unzipper {
 	 * @throws IOException
 	 */
 	private static void writeFile(ZipInputStream zipIn, String filePath) throws IOException {
-
-		String parent = filePath.replace(filePath.substring(filePath.lastIndexOf('/')), "");
-		createParents(parent);
+		createParent(filePath);
 
 		BufferedOutputStream bos = null;
 
@@ -168,17 +191,30 @@ public class Unzipper {
 		}
 	}
 
+	private static void createParent(String filePath) {
+		String parent = "";
+		if(filePath.contains("/"))
+			parent = filePath.replace(filePath.substring(filePath.lastIndexOf('/')), "");
+		else
+			parent = filePath.replace(filePath.substring(filePath.lastIndexOf('\\')), "");
+		createDirectory(parent);
+	}
+
 	/**
 	 * Create the tree files of the given path
 	 *
 	 * @param path
 	 *            path of our tree
 	 */
-	private static void createParents(String path) {
+	private static void createDirectory(String path) {
 
 		File file = new File(path);
 		if (!file.exists()) {
 			file.mkdirs();
 		}
+	}
+
+	private static String removeExtension(String path) {
+		return path.replace(path.substring(path.lastIndexOf('.')), "");
 	}
 }

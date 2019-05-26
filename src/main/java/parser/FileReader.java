@@ -14,6 +14,7 @@ import java.util.List;
 import org.eclipse.jgit.util.FileUtils;
 
 import model.AuthorType;
+import model.Person;
 import model.Student;
 
 public class FileReader {
@@ -71,18 +72,25 @@ public class FileReader {
 	 * @param student
 	 * @throws IOException
 	 */
-	public static void addListOfFilesToStudent(Student student) throws IOException {
-		String directoryPath = student.getDirectoryPath();
+	public static void addListOfFilesToPerson(Person person) {
+		String directoryPath = person.getDirectoryPath();
 		File directory = new File(directoryPath);
 		// File system
 		List<File> files = getFilesFromDirectory(directory);
 		// File of our model
-		List<model.File> studentFiles = new ArrayList<model.File>();
+		List<model.File> personFiles = new ArrayList<model.File>();
 		for (File file : files) {
-			studentFiles.add(new model.File(file.getName(),getLinesFromFile(file), AuthorType.STUDENT, student));
+			model.File actualFile = null;
+			try {
+				actualFile = new model.File(file.getName(),getLinesFromFile(file), AuthorType.STUDENT, person);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			personFiles.add(actualFile);
 		}
-		sortListAlphabetically(studentFiles);
-		student.setFiles(studentFiles);
+		sortListAlphabetically(personFiles);
+		person.setFiles(personFiles);
 	}
 
 	/**
@@ -137,7 +145,7 @@ public class FileReader {
 
 	}
 
-	private static void sortListAlphabetically(List<model.File> studentFiles){
-		studentFiles.sort(Comparator.comparing(model.File::getName));
+	private static void sortListAlphabetically(List<model.File> personFiles){
+		personFiles.sort(Comparator.comparing(model.File::getName));
 	}
 }

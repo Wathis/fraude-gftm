@@ -26,8 +26,11 @@ public class SpaceSeparatorFilter implements FilterVisitor {
         exam.setStudents(students);
     }
 
-    private String removeSpaces(String codeLine) {
-        return codeLine.trim();
+    public static String removeSpaces(String codeLine) {
+        codeLine = codeLine.trim();
+        String[] words = codeLine.split("\\n");
+        codeLine = String.join(" ",words);
+        return codeLine;
     }
 
 }
