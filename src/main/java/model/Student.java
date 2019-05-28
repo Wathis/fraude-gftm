@@ -5,8 +5,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Student extends Person{
-
+public class Student extends Person {
 
     private HashMap<String, Double> scores;
 
@@ -19,7 +18,6 @@ public class Student extends Person{
         super(name,directoryPath);
         setFiles(files);
     }
-
 
     public HashMap<String, Double> getScores() {
         return scores;

@@ -1,5 +1,9 @@
 package calculator;
 
+import calculator.commands.CodingHabitsCommand;
+import calculator.commands.OrdonateWordCommand;
+import calculator.commands.SimilarCodeCommand;
+import calculator.commands.VariableNameCommand;
 import model.Exam;
 import model.Student;
 
@@ -30,20 +34,16 @@ public class CalculatorCommandFactory {
         return null;
     }
 
-    public Double[] executeAllCommands() {
+    public HashMap<String,Double[]> executeAllCommands() {
+        HashMap<String, Double[]> commandsScores = new HashMap<>();
         if (commands.size() == 0) {
             return null;
         }
-        Double[] scores = new Double[exam.getStudents().size()];
         commands.keySet().forEach(commandName -> {
             Double[] commandScores = executeCommand(commandName);
-            if (commandScores != null) {
-                for (int i = 0 ; i < scores.length ; i++) {
-                    scores[i] += commandScores[i];
-                }
-            }
+            commandsScores.put(commandName,commandScores);
         });
-        return scores;
+        return commandsScores;
     }
 
     public void listCommands() {
@@ -53,7 +53,10 @@ public class CalculatorCommandFactory {
 
     public static CalculatorCommandFactory init(Exam exam, Student currentStudent) {
         CalculatorCommandFactory cf = new CalculatorCommandFactory(exam,currentStudent);
-        //PUT SOME DEFAULT COMMANDS
+        cf.addCommand("Similar code command", new SimilarCodeCommand());
+        cf.addCommand("Coding habits", new CodingHabitsCommand());
+        cf.addCommand("Variable Name Command", new VariableNameCommand());
+        cf.addCommand("Ordonate Word Command", new OrdonateWordCommand());
         return cf;
     }
 }

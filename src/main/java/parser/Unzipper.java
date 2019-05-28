@@ -110,7 +110,7 @@ public class Unzipper {
 		if (!entry.isDirectory()) {
 
 			boolean isZipFile = filePath.endsWith(".zip");
-			if (modele && (teacher == null)) {
+			if (modele && (teacher == null) && !entry.getName().contains("/bin/")) {
 				File file = new File(filePath);
 				String modeleDir = file.getParentFile().getAbsolutePath();
 				File dir = new File(modeleDir);

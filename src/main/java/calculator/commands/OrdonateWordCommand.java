@@ -49,13 +49,6 @@ public class OrdonateWordCommand implements IFraudCalculatorCommand {
                                     score++;
                                 }
                             }
-                            System.out.println("[=] " + diff.text);
-                        }
-                        if (diff.operation == DiffPatchMatch.Operation.INSERT) {
-                            System.out.print("[+] " + diff.text);
-                        }
-                        if (diff.operation == DiffPatchMatch.Operation.DELETE) {
-                            System.out.println("[-] " + diff.text);
                         }
                     }
                     scores[exam.getStudents().indexOf(student)] = (double) score / (double) nbWords;

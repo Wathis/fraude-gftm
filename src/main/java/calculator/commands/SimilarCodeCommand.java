@@ -30,16 +30,17 @@ public class SimilarCodeCommand implements IFraudCalculatorCommand {
 
                 for (DiffPatchMatch.Diff diff : diffs) {
                     if (diff.operation == DiffPatchMatch.Operation.EQUAL) {
-                        if (diff.text.length() > 5) // Considering that under 5 character it is not a bloc of code
+                        if (diff.text.length() > 5) { // Considering that under 5 character it is not a bloc of code
                             score += diff.text.length();
-                        System.out.println("[=] " + diff.text);
+//                            System.out.println("[=] " + diff.text);
+                        }
                     }
-                    if (diff.operation == DiffPatchMatch.Operation.INSERT) {
-                        System.out.println("[+] " + diff.text);
-                    }
-                    if (diff.operation == DiffPatchMatch.Operation.DELETE) {
-                        System.out.println("[-] " + diff.text);
-                    }
+//                    if (diff.operation == DiffPatchMatch.Operation.INSERT) {
+////                        System.out.println("[+] " + diff.text);
+//                    }
+//                    if (diff.operation == DiffPatchMatch.Operation.DELETE) {
+////                        System.out.println("[-] " + diff.text);
+//                    }
                 }
                 scores[exam.getStudents().indexOf(student)] = (double) score / ((double) studentCode.length());
             }

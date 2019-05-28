@@ -26,22 +26,24 @@ public class CodingHabitsCommand implements IFraudCalculatorCommand {
         int numberOfWord = 0;
         String[] words = currentStudentCode.split(" ");
         for(int i=0;i<words.length;i++){
-            if(words[i].charAt(words[i].length()-1) == ';' && words.length>=i+2){
+            if(words[i].length() > 0 && words[i].charAt(words[i].length()-1) == ';' && words.length>=i+2){
                 String potentialClassName = words[i+1];
-                String[] privitiveClasses = {"int","char"};
-                List<String> LprimitiveClasses = Arrays.asList(privitiveClasses);
-                boolean isClassOrPrimitiveType = Character.isUpperCase(potentialClassName.charAt(0))
-                        || LprimitiveClasses.contains(potentialClassName);
-                if(isClassOrPrimitiveType){
-                    numberOfWord++;
-                    i=i+2;//word i : "*;", word i+1 : "int"|"String"|..., word i+2 : variable name, these words are treated
-                    boolean isCamelCase = words[i].matches(camelCasePattern);
-                    boolean isSnakeCase = words[i].matches(snakeCasePattern);
-                    if (isCamelCase) {
-                        camelCaseWordNumber++;
-                    }
-                    if (isSnakeCase) {
-                        snakeCaseWordNumber++;
+                if (potentialClassName.length() > 0) {
+                    String[] privitiveClasses = {"int","char"};
+                    List<String> LprimitiveClasses = Arrays.asList(privitiveClasses);
+                    boolean isClassOrPrimitiveType = Character.isUpperCase(potentialClassName.charAt(0))
+                            || LprimitiveClasses.contains(potentialClassName);
+                    if(isClassOrPrimitiveType){
+                        numberOfWord++;
+                        i=i+2;//word i : "*;", word i+1 : "int"|"String"|..., word i+2 : variable name, these words are treated
+                        boolean isCamelCase = words[i].matches(camelCasePattern);
+                        boolean isSnakeCase = words[i].matches(snakeCasePattern);
+                        if (isCamelCase) {
+                            camelCaseWordNumber++;
+                        }
+                        if (isSnakeCase) {
+                            snakeCaseWordNumber++;
+                        }
                     }
                 }
             }

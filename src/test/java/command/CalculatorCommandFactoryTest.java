@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 import static utils.TestUtils.MODEL_PROF;
 import static utils.TestUtils.STUDENT_1;
@@ -26,7 +27,7 @@ public class CalculatorCommandFactoryTest {
         Exam exam = new Exam(MODEL_PROF,Arrays.asList(firstStudent,secondStudent));
         CalculatorCommandFactory calculatorCommandFactory = CalculatorCommandFactory.init(exam,firstStudent);
         calculatorCommandFactory.addCommand("Example Command", new ExampleCommand());
-        Double[] score = calculatorCommandFactory.executeAllCommands();
+        HashMap<String,Double[]> score = calculatorCommandFactory.executeAllCommands();
         Assert.assertNotNull(score);
     }
 
