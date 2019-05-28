@@ -37,16 +37,14 @@ public class SimilarCodeCommandTest {
                     ),
                     0.75
                 },
-//                {
-//                    Arrays.asList(
-//                            "{",
-//                            "}"
-//                    ), Arrays.asList(
-//                            "{",
-//                            "}"
-//                    ),
-//                    1
-//                },
+                {
+                    Arrays.asList(
+                            "System.out.println(\"Copie de code\")"
+                    ), Arrays.asList(
+                            "System.out.println(\"Copie de code\")"
+                    ),
+                    1
+                },
                 {
                     Arrays.asList(
                             "private static void checkDirectory(File directory) {",
@@ -104,5 +102,6 @@ public class SimilarCodeCommandTest {
 //        Double[] scores  = ordonateWordCommand.execute(exam,firstStudent);
 //        Assert.assertEquals(expectedScore,scores[1],0.01);
 //    }
+
 }
 
