@@ -19,7 +19,8 @@ public class OrdonateWordCommand implements IFraudCalculatorCommand {
         Double[] scores = new Double[exam.getStudents().size()];
         scores[exam.getStudents().indexOf(currentStudent)] = 1.;
 
-        String[] notWords={"{","}","(",")","[","]"};
+        String[] notWords={};//Sert a bannir des mots de la recherche (au cas où il y ai certain groupes de caractère
+                             // qu'on ne veut pas considérer comme des mots à débugger
         List<String> LnotWords =  Arrays.asList(notWords);
 
         String currentStudentCode = SpaceSeparatorFilter.removeSpaces(String.join(" ",currentStudent.getFilesLines()));
@@ -30,37 +31,34 @@ public class OrdonateWordCommand implements IFraudCalculatorCommand {
                 String studentCode = SpaceSeparatorFilter.removeSpaces(String.join(" ",student.getFilesLines()));
                 LinkedList<DiffPatchMatch.Diff> diffs = diffPatchMatch.diff_main(studentCode,currentStudentCode);
 
+                String[] studentCodeWords = studentCode.split(" ");
+                for(String word : studentCodeWords){
+                    if(word.length() > 3 && !LnotWords.contains(word)){
+                        nbWords++;
+                    }
+                }
                 for (DiffPatchMatch.Diff diff : diffs) {
                     String[] words = diff.text.split(" ");
                     if (diff.operation == DiffPatchMatch.Operation.EQUAL) {
                         for(int i=0;i<words.length;i++){
-                            if(words[i].length() > 0 && !LnotWords.contains(words[i])){
+                            if(words[i].length() > 3 && !LnotWords.contains(words[i])){
                                 score++;
-                                nbWords++;
                             }
                         }
                         System.out.println("[=] " + diff.text);
                     }
                     if (diff.operation == DiffPatchMatch.Operation.INSERT) {
-                        for(int i=0;i<words.length;i++) {
-                            if (words[i].length() > 0 && !LnotWords.contains(words[i])) {
-                                score++;
-                                nbWords++;
-                            }
-                        }
                         System.out.print("[+] " + diff.text);
                     }
                     if (diff.operation == DiffPatchMatch.Operation.DELETE) {
-                        for(int i=0;i<words.length;i++) {
-                            if (words[i].length() > 0 && !LnotWords.contains(words[i])) {
-                                score++;
-                                nbWords++;
-                            }
-                        }
                         System.out.println("[-] " + diff.text);
                     }
                 }
-                scores[exam.getStudents().indexOf(student)] = (double) score / (double) nbWords;
+                if(nbWords==0){
+                    scores[exam.getStudents().indexOf(student)] = 0.0;
+                }else{
+                    scores[exam.getStudents().indexOf(student)] = (double) score / (double) nbWords;
+                }
             }
 
         });

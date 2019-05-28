@@ -28,14 +28,14 @@ public class OrdonateWordCommandTest2 {
                 {
                         Arrays.asList(
                                 "{",
-                                "int azert = 0;",
+                                "char azert = 0;",
                                 "}"
                         ), Arrays.asList(
                         "{",
-                        "int uiopq = 0;",
+                        "char uiopq = 0;",
                         "}"
                 ),
-                        0.75
+                        0.5
                 },
                 {
                         Arrays.asList(
