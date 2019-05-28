@@ -37,26 +37,27 @@ public class OrdonateWordCommand implements IFraudCalculatorCommand {
                         nbWords++;
                     }
                 }
-                for (DiffPatchMatch.Diff diff : diffs) {
-                    String[] words = diff.text.split(" ");
-                    if (diff.operation == DiffPatchMatch.Operation.EQUAL) {
-                        for(int i=0;i<words.length;i++){
-                            if(words[i].length() > 3 && !LnotWords.contains(words[i])){
-                                score++;
-                            }
-                        }
-                        System.out.println("[=] " + diff.text);
-                    }
-                    if (diff.operation == DiffPatchMatch.Operation.INSERT) {
-                        System.out.print("[+] " + diff.text);
-                    }
-                    if (diff.operation == DiffPatchMatch.Operation.DELETE) {
-                        System.out.println("[-] " + diff.text);
-                    }
-                }
+
                 if(nbWords==0){
                     scores[exam.getStudents().indexOf(student)] = 0.0;
                 }else{
+                    for (DiffPatchMatch.Diff diff : diffs) {
+                        String[] words = diff.text.split(" ");
+                        if (diff.operation == DiffPatchMatch.Operation.EQUAL) {
+                            for(int i=0;i<words.length;i++){
+                                if(words[i].length() > 3 && !LnotWords.contains(words[i])){
+                                    score++;
+                                }
+                            }
+                            System.out.println("[=] " + diff.text);
+                        }
+                        if (diff.operation == DiffPatchMatch.Operation.INSERT) {
+                            System.out.print("[+] " + diff.text);
+                        }
+                        if (diff.operation == DiffPatchMatch.Operation.DELETE) {
+                            System.out.println("[-] " + diff.text);
+                        }
+                    }
                     scores[exam.getStudents().indexOf(student)] = (double) score / (double) nbWords;
                 }
             }

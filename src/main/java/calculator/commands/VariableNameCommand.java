@@ -6,55 +6,69 @@ import model.Exam;
 import model.Student;
 import utils.DiffPatchMatch;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public class VariableNameCommand implements IFraudCalculatorCommand {
+    String[] primitiveClasses = {"int","char"};
     @Override
     public Double[] execute(Exam exam, Student currentStudent) {
-        DiffPatchMatch diffPatchMatch = new DiffPatchMatch();
         Double[] scores = new Double[exam.getStudents().size()];
         scores[exam.getStudents().indexOf(currentStudent)] = 1.;
 
-        String currentStudentCode = "; "+SpaceSeparatorFilter.removeSpaces(String.join(" ",currentStudent.getFilesLines()));
+        ArrayList<String> currentStudentCodeVars = getVars(String.join(" ",currentStudent.getFilesLines()));
         exam.getStudents().forEach(student -> {
             if (student != currentStudent) {
-                int score = 0;
-                String studentCode = "; "+SpaceSeparatorFilter.removeSpaces(String.join(" ",student.getFilesLines()));
-                LinkedList<DiffPatchMatch.Diff> diffs = diffPatchMatch.diff_main(studentCode,currentStudentCode);
-
-                for (DiffPatchMatch.Diff diff : diffs) {
-                    if (diff.operation == DiffPatchMatch.Operation.EQUAL) {
-                        String[] words = diff.text.split(" ");
-                        for(int i=0;i<words.length;i++){
-
-                            if(words[i].charAt(words[i].length()-1) == ';' && words.length>=i+2){
-                                String potentialClassName = words[i+1];
-                                String[] privitiveClasses = {"int","char"};
-                                List<String> LprimitiveClasses = Arrays.asList(privitiveClasses);
-                                boolean isClass = Character.isUpperCase(potentialClassName.charAt(0))
-                                        || LprimitiveClasses.contains(potentialClassName);
-                                if(isClass){
-                                    score++;
-                                    i=i+2;//word i : "*;", word i+1 : "int"|"String"|..., word i+2 : variable name, these words are treated
-                                }
-                            }
+                ArrayList<String> studentCodeVars = getVars(String.join(" ",student.getFilesLines()));
+                int nbVar = studentCodeVars.size();
+                if(nbVar==0){
+                    scores[exam.getStudents().indexOf(student)]=0.0;
+                }else{
+                    int nbCommonVars = 0;
+                    for(String var : studentCodeVars) {
+                        if (currentStudentCodeVars.contains(var)) {
+                            nbCommonVars++;
                         }
-                        System.out.println("[=] " + diff.text);
                     }
-                    if (diff.operation == DiffPatchMatch.Operation.INSERT) {
-                        System.out.print("[+] " + diff.text);
-                    }
-                    if (diff.operation == DiffPatchMatch.Operation.DELETE) {
-                        System.out.println("[-] " + diff.text);
-                    }
+                    scores[exam.getStudents().indexOf(student)] = (double) nbCommonVars / (double) nbVar;
+
                 }
-                scores[exam.getStudents().indexOf(student)] = (double) score / (double) studentCode.length();
+
             }
 
         });
         return scores;
+    }
+
+    private ArrayList<String> getVars(String studentCode){
+        studentCode = "; "+SpaceSeparatorFilter.removeSpaces(studentCode);
+        ArrayList<String> studentCodeVars = new ArrayList<>();
+        String[] studentCodeWords = studentCode.split(" ");
+        for(int i=0;i<studentCodeWords.length;i++){
+            if(studentCodeWords.length>i+2 && studentCodeWords[i].length()!=0){
+                char lastChar = studentCodeWords[i].charAt(studentCodeWords[i].length()-1);
+                if( !(studentCodeWords[i+1]+" "+studentCodeWords[i+2]).contains("\"")
+                        && !(studentCodeWords[i+1]+" "+studentCodeWords[i+2]).contains("'")
+                        && (lastChar == ';' || lastChar == '{' || lastChar == '}')
+                        && studentCodeWords.length>i+2
+                        && studentCodeWords[i+1].length()!=0
+                        && studentCodeWords[i+2].length()!=0 ) {
+                    String potentialClassName2 = studentCodeWords[i + 1];
+                    if (potentialClassName2.length() != 0) {
+                        List<String> LprimitiveClasses = Arrays.asList(primitiveClasses);
+                        boolean isClass = Character.isUpperCase(potentialClassName2.charAt(0))
+                                || LprimitiveClasses.contains(potentialClassName2);
+                        if (isClass) {
+                            studentCodeVars.add(studentCodeWords[i+1]+" "+studentCodeWords[i+2]);
+                            i = i + 2;//word i : "*;", word i+1 : "int"|"String"|..., word i+2 : variable name, these words are treated
+                        }
+                    }
+                }
+            }
+        }
+        return studentCodeVars;
     }
 
 }
