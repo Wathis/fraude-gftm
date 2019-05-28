@@ -1,8 +1,12 @@
 package front;
 
+import calculator.CalculatorCommandFactory;
 import model.Exam;
+import model.Student;
 import parser.Unzipper;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FraudingerApplication {
@@ -27,10 +31,28 @@ public class FraudingerApplication {
         String pathToDest = scanner.nextLine();
         System.out.println("Enter the model folder location or no if there is no model");
         String modelPath = scanner.nextLine();
-
-        //Unzipper.unzip();
+        if(modelPath.equals("no")){
+            try {
+                Unzipper.unzip(pathToUnzip,pathToDest,true,false);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            try {
+                Unzipper.unzip(pathToUnzip,pathToDest,false,true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         System.out.println("Unzipping ...");
 
+        Exam exam = new Exam(new ArrayList<>(),Unzipper.getStudents());
+        ArrayList <Student>  studentArrayList = new ArrayList<>( Unzipper.getStudents());
+
+        for(Student currentStrudent : studentArrayList){
+           CalculatorCommandFactory factory = CalculatorCommandFactory.init(exam,currentStrudent);
+            System.out.println(factory.executeAllCommands());
+        }
     }
 
 }
