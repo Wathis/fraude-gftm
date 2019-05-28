@@ -1,6 +1,5 @@
 package command;
 
-import calculator.commands.OrdonateWordCommand;
 import calculator.commands.SimilarCodeCommand;
 import model.AuthorType;
 import model.Exam;
