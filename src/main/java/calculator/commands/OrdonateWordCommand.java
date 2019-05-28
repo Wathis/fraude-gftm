@@ -26,28 +26,41 @@ public class OrdonateWordCommand implements IFraudCalculatorCommand {
         exam.getStudents().forEach(student -> {
             if (student != currentStudent) {
                 int score = 0;
+                int nbWords=0;
                 String studentCode = SpaceSeparatorFilter.removeSpaces(String.join(" ",student.getFilesLines()));
                 LinkedList<DiffPatchMatch.Diff> diffs = diffPatchMatch.diff_main(studentCode,currentStudentCode);
 
                 for (DiffPatchMatch.Diff diff : diffs) {
+                    String[] words = diff.text.split(" ");
                     if (diff.operation == DiffPatchMatch.Operation.EQUAL) {
-                        String[] words = diff.text.split(" ");
                         for(int i=0;i<words.length;i++){
-
                             if(words[i].length() > 0 && !LnotWords.contains(words[i])){
                                 score++;
+                                nbWords++;
                             }
                         }
                         System.out.println("[=] " + diff.text);
                     }
                     if (diff.operation == DiffPatchMatch.Operation.INSERT) {
+                        for(int i=0;i<words.length;i++) {
+                            if (words[i].length() > 0 && !LnotWords.contains(words[i])) {
+                                score++;
+                                nbWords++;
+                            }
+                        }
                         System.out.print("[+] " + diff.text);
                     }
                     if (diff.operation == DiffPatchMatch.Operation.DELETE) {
+                        for(int i=0;i<words.length;i++) {
+                            if (words[i].length() > 0 && !LnotWords.contains(words[i])) {
+                                score++;
+                                nbWords++;
+                            }
+                        }
                         System.out.println("[-] " + diff.text);
                     }
                 }
-                scores[exam.getStudents().indexOf(student)] = (double) score / (double) studentCode.length();
+                scores[exam.getStudents().indexOf(student)] = (double) score / (double) nbWords;
             }
 
         });
