@@ -15,8 +15,6 @@ import java.util.Collection;
 import java.util.List;
 
 import static utils.TestUtils.MODEL_PROF;
-import static utils.TestUtils.STUDENT_1;
-import static utils.TestUtils.STUDENT_2;
 
 @RunWith(Parameterized.class)
 public class SimilarCodeCommandTest {
@@ -90,17 +88,6 @@ public class SimilarCodeCommandTest {
         Assert.assertEquals(expectedScore,scores[1],0.1);
     }
 
-//    @Test
-//    public void testExecuteOrdonateCommand() {
-//        Student firstStudent = new Student("","");
-//        firstStudent.setFiles(Arrays.asList(new File("",firstCode, AuthorType.STUDENT,firstStudent)));
-//        Student secondStudent = new Student("","");
-//        secondStudent.setFiles(Arrays.asList(new File("",secondCode, AuthorType.STUDENT,secondStudent)));
-//        Exam exam = new Exam(MODEL_PROF,Arrays.asList(firstStudent,secondStudent));
-//        OrdonateWordCommand ordonateWordCommand = new OrdonateWordCommand();
-//        Double[] scores  = ordonateWordCommand.execute(exam,firstStudent);
-//        Assert.assertEquals(expectedScore,scores[1],0.01);
-//    }
 
 }
 
