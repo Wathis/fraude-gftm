@@ -10,6 +10,7 @@ import org.junit.runners.Suite;
         CalculatorCommandFactoryTest.class,
         SimilarCodeCommandTest.class,
         CodingHabitsCommandTest.class,
+        OrdonateWordCommandTest2.class
 })
 public class CommandTestSuite {
 
