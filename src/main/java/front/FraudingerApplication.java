@@ -1,6 +1,7 @@
 package front;
 
 import model.Exam;
+import parser.Unzipper;
 
 import java.util.Scanner;
 
@@ -19,10 +20,17 @@ public class FraudingerApplication {
                 "                                     |___/           \n" +
                 "-------------------------------------------------------"
         );
-        System.out.print("Enter a directory zip or folder location : \n > ");
+        System.out.print("Enter the student zip or folder location : \n > ");
         Scanner scanner = new Scanner(System.in);
-        String path = scanner.nextLine();
+        String pathToUnzip = scanner.nextLine();
+        System.out.println("Enter a directory where you want to extract zip");
+        String pathToDest = scanner.nextLine();
+        System.out.println("Enter the model folder location or no if there is no model");
+        String modelPath = scanner.nextLine();
+
+        //Unzipper.unzip();
         System.out.println("Unzipping ...");
+
     }
 
 }
