@@ -86,8 +86,8 @@ public class OrdonateWordCommandTest2 {
         Student secondStudent = new Student("","");
         secondStudent.setFiles(Arrays.asList(new File("",secondCode, AuthorType.STUDENT,secondStudent)));
         Exam exam = new Exam(MODEL_PROF,Arrays.asList(firstStudent,secondStudent));
-        SimilarCodeCommand similarCodeCommand = new SimilarCodeCommand();
-        Double[] scores  = similarCodeCommand.execute(exam,firstStudent);
+        OrdonateWordCommand ordonateWordCommand = new OrdonateWordCommand();
+        Double[] scores  = ordonateWordCommand.execute(exam,firstStudent);
         Assert.assertEquals(expectedScore,scores[1],0.1);
     }
 
