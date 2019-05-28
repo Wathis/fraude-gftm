@@ -100,7 +100,7 @@ public class FileReader {
 	 * @param directory
 	 * @return
 	 */
-	private static List<File> getFilesFromDirectory(File directory) {
+	public static List<File> getFilesFromDirectory(File directory) {
 		List<File> files = new ArrayList<File>();
 		// Get the name of all the child in the directory
 		String[] nameChilden = directory.list();
