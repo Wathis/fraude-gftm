@@ -41,6 +41,7 @@ public class XLSWriterTest {
 
         Assert.assertTrue(firstCommand.exists() );
         Assert.assertTrue(secondCommand.exists() );
+        //test
     }
 
     boolean deleteDirectory(File directoryToBeDeleted) {
