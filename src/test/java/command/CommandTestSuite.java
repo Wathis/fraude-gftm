@@ -1,6 +1,5 @@
 package command;
 
-import calculator.commands.CodingHabitsCommand;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -9,7 +8,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         CalculatorCommandFactoryTest.class,
         SimilarCodeCommandTest.class,
-        OrdonateWordCommandTest2.class,
+        OrdonateWordCommandTest.class,
         CodingHabitsCommandTest.class,
         VariableNameCommandTest.class
 })
