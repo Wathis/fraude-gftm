@@ -4,7 +4,7 @@ import com.github.difflib.DiffUtils;
 import com.github.difflib.algorithm.DiffException;
 import com.github.difflib.patch.AbstractDelta;
 import com.github.difflib.patch.Patch;
-import io.Logger;
+import utils.Logger;
 import model.Exam;
 import model.Student;
 

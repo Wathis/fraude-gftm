@@ -1,7 +1,7 @@
 package calculator.commands;
 
 import calculator.IFraudCalculatorCommand;
-import io.Logger;
+import utils.Logger;
 import model.Exam;
 import model.Student;
 

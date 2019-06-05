@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package utils;
+package lib;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

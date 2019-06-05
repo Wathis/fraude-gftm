@@ -3,13 +3,14 @@ package calculator.commands;
 import calculator.IFraudCalculatorCommand;
 import model.Exam;
 import model.Student;
-import utils.DiffPatchMatch;
+import lib.DiffPatchMatch;
 
 import java.util.LinkedList;
 
 public class SimilarCodeCommand implements IFraudCalculatorCommand {
 
     /**
+     * The student code must be formatted for this command
      * The student code must be formatted for this command
      * @param exam
      * @param currentStudent

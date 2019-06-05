@@ -4,7 +4,7 @@ import calculator.commands.CodingHabitsCommand;
 import calculator.commands.OrdonateWordCommand;
 import calculator.commands.SimilarCodeCommand;
 import calculator.commands.VariableNameCommand;
-import io.Logger;
+import utils.Logger;
 import model.Exam;
 import model.Student;
 
