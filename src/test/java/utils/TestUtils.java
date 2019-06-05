@@ -45,6 +45,23 @@ public class TestUtils {
             "}"
     );
 
+    public static final List<String> STUDENT_IMPORTATION = Arrays.asList(
+            "{",
+            "import java.util.List;",
+            "import java.util.Arrays;",
+            "int salut = 0;",
+            "salut = salut + 1;",
+            "// Je met un commentaire",
+            "if (salut > 0) {",
+            "   salut = salut + 1;",
+            "}",
+            "System.out.println(\"Voici salut : \" + salut)",
+            "}",
+            "{",
+            "// code d'un eleve qui a copié",
+            "}"
+    );
+
     public static final String CODE_PROF =
             "{\n" +
                     "int salut = 0;\n"  +
@@ -68,7 +85,8 @@ public class TestUtils {
                     "// code d'un eleve qui a copié\n" +
                     "}\n";
 
+    public static final String STUDENT_MINUS_IMPORTATION = "{int salut = 0;salut = salut + 1;// Je met un commentaireif (salut > 0) {   salut = salut + 1;}System.out.println(\"Voici salut : \" + salut)}{// code d'un eleve qui a copié}";
+
 
     public static final String MODEL_PROF_MINUS_STUDENT_2 = "[salut = salut + 1;, // Je met un commentaire, if (salut > 0) {,    salut = salut + 1;, System.out.println(\"Voici salut : \" + salut), }, // code d'un eleve qui a copié]";
-
 }
