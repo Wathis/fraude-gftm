@@ -12,7 +12,6 @@ public class ImportationSuppressionFilter implements FilterVisitor {
 	public void visit(Exam exam) {
 		List<Student> students = exam.getStudents();
 		students.forEach(student -> {
-			System.out.println("NOUVEAU ELEVE");
 			List<String> studentCodeLines = student.getFilesLines();
 			List<String> studentCodeLinesWithoutImport = new LinkedList<>();
 			studentCodeLines.forEach(codeLine -> {

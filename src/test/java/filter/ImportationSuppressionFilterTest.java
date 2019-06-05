@@ -44,9 +44,6 @@ public class ImportationSuppressionFilterTest {
 			lines.append(string);
 		}
         result = lines.toString();
-        System.out.println(expectedResult);
-        System.out.println("FILELINES");
-        System.out.println(result);
         Assert.assertEquals(expectedResult.trim(),result);
 	}
 
