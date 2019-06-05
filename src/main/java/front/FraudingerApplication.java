@@ -3,10 +3,11 @@ package front;
 import calculator.CalculatorCommandFactory;
 import filter.ModelSuppressionFilter;
 import filter.SpaceSeparatorFilter;
+import io.Logger;
+import io.XLSWriter;
 import model.Exam;
 import model.Student;
 import model.Teacher;
-import parser.FileReader;
 import parser.Unzipper;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ import static parser.FileReader.addListOfFilesToPerson;
 public class FraudingerApplication {
 
     public void launch() {
-        System.out.println(
+        Logger.info(
                 "-------------------------------------------------------\n" +
                 "  ______                   _ _                       \n" +
                 " |  ____|                 | (_)                      \n" +
@@ -33,18 +34,23 @@ public class FraudingerApplication {
                 "-------------------------------------------------------"
         );
         Scanner scanner = new Scanner(System.in);
-//        System.out.print("Enter the student zip or folder location : \n > ");
+//        Logger.info("Enter the student zip or folder location : \n > ");
 //        String pathToUnzip = scanner.nextLine();
-//        System.out.println("Enter a directory where you want to extract zip");
+//        Logger.info("Enter a directory where you want to extract zip");
 //        String pathToDest = scanner.nextLine();
-//        System.out.println("Enter the model folder location or no if there is no model");
+//        Logger.info("Enter the model folder location or no if there is no model");
 //        String modelPath = scanner.nextLine();
+//        Logger.info("Enter the folder path you want the CSV result");
+//        String resultFolder = scanner.nextLine();
 
         String pathToUnzip = "/Users/mathisdelaunay/Desktop/mprojet/projet.zip";
         String pathToDest = "/Users/mathisdelaunay/Desktop/mprojet";
         String modelToDest = "/Users/mathisdelaunay/Desktop/mprojet";
         String modelPath = "/Users/mathisdelaunay/Desktop/mprojet/model.zip";
-        System.out.println("Unzipping ...");
+        String resultFolder = "/Users/mathisdelaunay/Desktop/mprojet/out";
+
+        Logger.info("Unzipping ...");
+
         if(modelPath.equals("no")){
             try {
                 Unzipper.unzip(pathToUnzip,pathToDest,true,false);
@@ -74,22 +80,30 @@ public class FraudingerApplication {
         for(Student currentStrudent : exam.getStudents()){
            CalculatorCommandFactory factory = CalculatorCommandFactory.init(exam,currentStrudent);
            HashMap<String,Double[]> commandsScores = factory.executeAllCommands();
+           currentStrudent.setScores(commandsScores);
            printCommandsForOneStudent(currentStrudent,exam.getStudents(),commandsScores);
+        }
+
+        try {
+            XLSWriter.write(exam.getStudents(),resultFolder);
+        } catch (IOException e) {
+            Logger.err("Impossible d'exporter au format csv");
+            Logger.err(e.getMessage());
         }
     }
 
     private void printCommandsForOneStudent(Student student, List<Student> students, HashMap<String,Double[]> commandsScores) {
-        System.out.println("\n---------------------------------");
-        System.out.println("|       " + student.getName());
-        System.out.println("---------------------------------");
+        Logger.info("\n---------------------------------");
+        Logger.info("|       " + student.getName());
+        Logger.info("---------------------------------");
         commandsScores.keySet().forEach((commandName) -> {
-            System.out.println("\n----" + commandName.toUpperCase() + "----");
+            Logger.info("\n----" + commandName.toUpperCase() + "----");
             int i = 0;
             for (Double score : commandsScores.get(commandName)) {
-                System.out.println(students.get(i).getName() + " : " + score);
+                Logger.info(students.get(i).getName() + " : " + score);
                 i++;
             }
-            System.out.println("\n");
+            Logger.info("\n");
         });
     }
 

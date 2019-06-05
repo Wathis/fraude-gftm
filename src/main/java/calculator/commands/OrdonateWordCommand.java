@@ -6,7 +6,6 @@ import model.Exam;
 import model.Student;
 import utils.DiffPatchMatch;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;

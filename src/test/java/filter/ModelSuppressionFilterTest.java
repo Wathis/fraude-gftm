@@ -14,9 +14,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import static utils.TestUtils.MODEL_PROF;
-import static utils.TestUtils.MODEL_PROF_MINUS_STUDENT_2;
-import static utils.TestUtils.STUDENT_2;
+import static utils.TestUtils.*;
 
 @RunWith(Parameterized.class)
 public class ModelSuppressionFilterTest {

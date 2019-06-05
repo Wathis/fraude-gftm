@@ -4,10 +4,10 @@ import calculator.commands.CodingHabitsCommand;
 import calculator.commands.OrdonateWordCommand;
 import calculator.commands.SimilarCodeCommand;
 import calculator.commands.VariableNameCommand;
+import io.Logger;
 import model.Exam;
 import model.Student;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class CalculatorCommandFactory {
@@ -47,7 +47,7 @@ public class CalculatorCommandFactory {
     }
 
     public void listCommands() {
-        System.out.println("Commands enabled :");
+        Logger.info("Commands enabled :");
         this.commands.keySet().stream().forEach(System.out::println);
     }
 

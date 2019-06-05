@@ -1,21 +1,13 @@
 package parser;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import model.AuthorType;
+import model.Person;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-
-import org.eclipse.jgit.util.FileUtils;
-
-import model.AuthorType;
-import model.Person;
-import model.Student;
 
 public class FileReader {
 

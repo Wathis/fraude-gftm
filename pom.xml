@@ -26,6 +26,12 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/hr.com.vgv/excel-io -->
+        <dependency>
+            <groupId>hr.com.vgv</groupId>
+            <artifactId>excel-io</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

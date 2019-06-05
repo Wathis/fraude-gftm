@@ -60,10 +60,10 @@ public class VariableNameCommandTest {
                         Arrays.asList(
                                 "int customVar;",
                                 "char secondCustomVar;",
-                                "System.out.println(\"Copie de code\")"
+                                "Logger.info(\"Copie de code\")"
                         ),
                         Arrays.asList(
-                                "System.out.println(\"Copie de code\")",
+                                "Logger.info(\"Copie de code\")",
                                 "int customVar;",
                                 "char anotherCustomVar;"
                         ),
