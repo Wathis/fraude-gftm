@@ -136,13 +136,8 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 	 * @return
 	 */
 	private <T> List<AbstractDelta<T>> getDeltas(List<T> list1, List<T> list2) {
-		Patch<T> patch = null;
+		Patch<T> patch = new Patch<T>();
 		try {
-			// TODO : Probleme avec la position qui prend la valeur pour le
-			// debut du
-			// changement en fait faudrait increment les positions avec toutes
-			// les
-			// lignes qui change derriere
 			patch = DiffUtils.diff(list1, list2);
 		} catch (DiffException e) {
 			System.out.println(e.getMessage());

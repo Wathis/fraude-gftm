@@ -14,21 +14,20 @@ public class FileReader {
 	public static Collection<String> parseFile(String fileName) throws Exception {
 
 		// Si fichier commence par . -> fichier de conf
-		FileInputStream fileStream = null;
-		BufferedReader br = null;
-
-		fileStream = new FileInputStream(fileName);
-		br = new BufferedReader(new InputStreamReader(fileStream));
-
+		FileInputStream fileStream = new FileInputStream(fileName);
 		Collection<String> lines = new ArrayList<String>();
-		String strLine;
-
-		// Read ClassFile Line By Line
-		while ((strLine = br.readLine()) != null) {
-			lines.add(strLine);
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new InputStreamReader(fileStream));
+			String strLine;
+			// Read ClassFile Line By Line
+			while ((strLine = br.readLine()) != null) {
+				lines.add(strLine);
+			}
+		} finally {
+			closeStreams(fileStream, br);
 		}
 
-		closeStreams(fileStream, br);
 		return lines;
 	}
 
@@ -74,8 +73,11 @@ public class FileReader {
 		for (File file : files) {
 			model.File actualFile = null;
 			try {
-				actualFile = new model.File(file.getName(),getLinesFromFile(file), AuthorType.STUDENT, person);
+				actualFile = new model.File(file.getName(), getLinesFromFile(file), AuthorType.STUDENT, person);
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -105,7 +107,7 @@ public class FileReader {
 				files.addAll(getFilesFromDirectory(fileChild));
 			}
 			// Temp to only get source
-			if(nameFile.contains(".java")){
+			if (nameFile.contains(".java")) {
 				files.add(fileChild);
 			}
 		}
@@ -117,27 +119,32 @@ public class FileReader {
 	 *
 	 * @param file
 	 * @return
-	 * @throws IOException
+	 * @throws Exception
 	 */
-	private static Collection<String> getLinesFromFile(File file) throws IOException {
+	private static Collection<String> getLinesFromFile(File file) throws Exception {
 		FileInputStream inputStream = new FileInputStream(file);
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-		Collection<String> lines = new ArrayList<String>();
-		String line;
-		while ((line = bufferedReader.readLine()) != null) {
-			lines.add(line);
-		}
+		BufferedReader bufferedReader = null;
 		try {
-			closeStreams(inputStream, bufferedReader);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return lines;
+			bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
+			Collection<String> lines = new ArrayList<String>();
+			String line;
+			while ((line = bufferedReader.readLine()) != null) {
+				lines.add(line);
+			}
+			try {
+				closeStreams(inputStream, bufferedReader);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return lines;
+		} finally {
+			closeStreams(inputStream, bufferedReader);
+		}
 	}
 
-	private static void sortListAlphabetically(List<model.File> personFiles){
+	private static void sortListAlphabetically(List<model.File> personFiles) {
 		personFiles.sort(Comparator.comparing(model.File::getName));
 	}
 }
