@@ -58,7 +58,41 @@ public class TestUtils {
             "System.out.println(\"Voici salut : \" + salut)",
             "}",
             "{",
-            "// code d'un eleve qui a copié",
+            "// code d'un eleve qui a copie",
+            "}"
+    );
+
+    public static final List<String> STUDENT_IMPORTATION2 = Arrays.asList(
+            "{",
+            "import java.util.List;",
+            "import java.util.Arra;",
+            "int salut = 0;",
+            "salut = salut + 1;",
+            "// Je met un commaire",
+            "if (salut > 2) {",
+            "   salut = salut + 1;",
+            "}",
+            "System.out.println(\"Voici salut : \" + salut)",
+            "}",
+            "{",
+            "// code d'un eleve qui a copie",
+            "}"
+    );
+
+    public static final List<String> STUDENT_IMPORTATION3 = Arrays.asList(
+            "{",
+            "import java.util.List;",
+            "import java.util.Arrays;",
+            "int salut = 0;",
+            "salut = salut + 1;",
+            "// Je met un commaire",
+            "if (salut > 2) {",
+            "   salut = salut + 1;",
+            "}",
+            "System.out.println(\"Voici salut : \" + salut)",
+            "}",
+            "{",
+            "// code d'un eleve qui a copie",
             "}"
     );
 
