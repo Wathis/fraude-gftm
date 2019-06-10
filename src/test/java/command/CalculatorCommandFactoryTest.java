@@ -12,9 +12,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import static utils.TestUtils.MODEL_PROF;
-import static utils.TestUtils.STUDENT_1;
-import static utils.TestUtils.STUDENT_2;
+import static utils.TestUtils.*;
 
 public class CalculatorCommandFactoryTest {
 

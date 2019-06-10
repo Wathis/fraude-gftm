@@ -4,6 +4,7 @@ import com.github.difflib.DiffUtils;
 import com.github.difflib.algorithm.DiffException;
 import com.github.difflib.patch.AbstractDelta;
 import com.github.difflib.patch.Patch;
+import utils.Logger;
 import model.Exam;
 import model.Student;
 
@@ -21,7 +22,7 @@ public class ModelSuppressionFilter implements FilterVisitor {
             try {
                 patch = DiffUtils.diff(professorLines, student.getFilesLines());
             } catch (DiffException e) {
-                System.out.println(e.getMessage());
+                Logger.info(e.getMessage());
                 return;
             }
             List<String> studentLines = new LinkedList<>();

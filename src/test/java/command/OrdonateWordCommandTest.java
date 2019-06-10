@@ -1,7 +1,6 @@
 package command;
 
 import calculator.commands.OrdonateWordCommand;
-import calculator.commands.SimilarCodeCommand;
 import model.AuthorType;
 import model.Exam;
 import model.File;
@@ -16,8 +15,6 @@ import java.util.Collection;
 import java.util.List;
 
 import static utils.TestUtils.MODEL_PROF;
-import static utils.TestUtils.STUDENT_1;
-import static utils.TestUtils.STUDENT_2;
 
 @RunWith(Parameterized.class)
 public class OrdonateWordCommandTest {
@@ -39,9 +36,9 @@ public class OrdonateWordCommandTest {
                 },
                 {
                         Arrays.asList(
-                                "System.out.println(\"Copie de code\")"
+                                "Logger.info(\"Copie de code\")"
                         ), Arrays.asList(
-                        "System.out.println(\"Copie de code\")"
+                        "Logger.info(\"Copie de code\")"
                 ),
                         1
                 },

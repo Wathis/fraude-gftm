@@ -3,6 +3,6 @@ addons:
   sonarcloud:
     organization: "wathis-github"
     token:
-      secure: "0976e4c28853c12f2368054ce60866ed49a8ac7a"
+      secure: "041e94ced97683d37a974b4d5db343c47bc6e8bc"
 script:
-- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar

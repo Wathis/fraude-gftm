@@ -4,10 +4,9 @@ import calculator.IFraudCalculatorCommand;
 import filter.SpaceSeparatorFilter;
 import model.Exam;
 import model.Student;
-import utils.DiffPatchMatch;
+import lib.DiffPatchMatch;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 public class CodingHabitsCommand implements IFraudCalculatorCommand {
@@ -16,6 +15,7 @@ public class CodingHabitsCommand implements IFraudCalculatorCommand {
     public Double[] execute(Exam exam, Student currentStudent) {
         DiffPatchMatch diffPatchMatch = new DiffPatchMatch();
         Double[] scores = new Double[exam.getStudents().size()];
+        Arrays.fill(scores,-1.);
         scores[exam.getStudents().indexOf(currentStudent)] = 1.;
         String camelCasePattern = "([a-z0-9]+[A-Z0-9]+\\w+)+";
         String snakeCasePattern = "[a-z0-9]*(_[a-z0-9]+)*";

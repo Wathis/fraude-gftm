@@ -3,15 +3,14 @@ package calculator.commands;
 import calculator.IFraudCalculatorCommand;
 import model.Exam;
 import model.Student;
-import utils.DiffPatchMatch;
+import lib.DiffPatchMatch;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 public class SimilarCodeCommand implements IFraudCalculatorCommand {
 
     /**
+     * The student code must be formatted for this command
      * The student code must be formatted for this command
      * @param exam
      * @param currentStudent
@@ -32,14 +31,14 @@ public class SimilarCodeCommand implements IFraudCalculatorCommand {
                     if (diff.operation == DiffPatchMatch.Operation.EQUAL) {
                         if (diff.text.length() > 5) { // Considering that under 5 character it is not a bloc of code
                             score += diff.text.length();
-//                            System.out.println("[=] " + diff.text);
+//                            Logger.info("[=] " + diff.text);
                         }
                     }
 //                    if (diff.operation == DiffPatchMatch.Operation.INSERT) {
-////                        System.out.println("[+] " + diff.text);
+////                        Logger.info("[+] " + diff.text);
 //                    }
 //                    if (diff.operation == DiffPatchMatch.Operation.DELETE) {
-////                        System.out.println("[-] " + diff.text);
+////                        Logger.info("[-] " + diff.text);
 //                    }
                 }
                 scores[exam.getStudents().indexOf(student)] = (double) score / ((double) studentCode.length());

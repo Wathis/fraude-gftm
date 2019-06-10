@@ -4,9 +4,8 @@ import calculator.IFraudCalculatorCommand;
 import filter.SpaceSeparatorFilter;
 import model.Exam;
 import model.Student;
-import utils.DiffPatchMatch;
+import lib.DiffPatchMatch;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;

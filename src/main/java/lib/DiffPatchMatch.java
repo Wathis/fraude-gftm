@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package utils;
+package lib;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -788,7 +788,7 @@ public class DiffPatchMatch {
                         <= Math.max(length_insertions1, length_deletions1))
                         && (lastEquality.length()
                         <= Math.max(length_insertions2, length_deletions2))) {
-                    //System.out.println("Splitting: '" + lastEquality + "'");
+                    //Logger.info("Splitting: '" + lastEquality + "'");
                     // Walk back to offending equality.
                     while (thisDiff != equalities.peek()) {
                         thisDiff = pointer.previous();
@@ -1094,7 +1094,7 @@ public class DiffPatchMatch {
                         || ((lastEquality.length() < Diff_EditCost / 2)
                         && ((pre_ins ? 1 : 0) + (pre_del ? 1 : 0)
                         + (post_ins ? 1 : 0) + (post_del ? 1 : 0)) == 3))) {
-                    //System.out.println("Splitting: '" + lastEquality + "'");
+                    //Logger.info("Splitting: '" + lastEquality + "'");
                     // Walk back to offending equality.
                     while (thisDiff != equalities.peek()) {
                         thisDiff = pointer.previous();

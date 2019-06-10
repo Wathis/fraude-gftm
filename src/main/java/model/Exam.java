@@ -1,7 +1,6 @@
 package model;
 
 import filter.FilterVisitor;
-import model.Student;
 
 import java.util.List;
 

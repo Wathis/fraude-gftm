@@ -36,9 +36,9 @@ public class SimilarCodeCommandTest {
                 },
                 {
                     Arrays.asList(
-                            "System.out.println(\"Copie de code\")"
+                            "Logger.info(\"Copie de code\")"
                     ), Arrays.asList(
-                            "System.out.println(\"Copie de code\")"
+                            "Logger.info(\"Copie de code\")"
                     ),
                     1
                 },

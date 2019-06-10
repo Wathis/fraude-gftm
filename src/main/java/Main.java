@@ -1,11 +1,6 @@
-import java.io.IOException;
-import java.util.List;
-
 import front.FraudingerApplication;
-import model.Person;
-import model.Student;
-import parser.FileReader;
-import parser.Unzipper;
+
+import java.io.IOException;
 
 public class Main {
 
@@ -13,4 +8,5 @@ public class Main {
 		FraudingerApplication fraudingerApplication = new FraudingerApplication();
 		fraudingerApplication.launch();
 	}
+
 }
