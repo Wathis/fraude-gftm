@@ -30,7 +30,7 @@ public class VariableNameCommand implements IFraudCalculatorCommand {
                             score+=Math.pow(var.length(),2);//On met à la puissance 2 car plus le nom de la variable est long, plus c'est louche (de maniere quadratique)
                         }
                     }
-                    scores[exam.getStudents().indexOf(student)] = Math.min((double) score/100,1);
+                    scores[exam.getStudents().indexOf(student)] = Math.min((double) score/10000,1);
                 }
             }
         });

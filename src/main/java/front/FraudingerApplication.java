@@ -3,6 +3,7 @@ package front;
 import calculator.CalculatorCommandFactory;
 import filter.ModelSuppressionFilter;
 import filter.SpaceSeparatorFilter;
+import org.apache.poi.util.SystemOutLogger;
 import utils.Logger;
 import io.XLSWriter;
 import model.Exam;
@@ -11,10 +12,7 @@ import model.Teacher;
 import parser.Unzipper;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static parser.FileReader.addListOfFilesToPerson;
 
@@ -43,11 +41,11 @@ public class FraudingerApplication {
 //        Logger.info("Enter the folder path you want the CSV result");
 //        String resultFolder = scanner.nextLine();
 
-        String pathToUnzip = "/Users/mathisdelaunay/Desktop/mprojet/projet.zip";
-        String pathToDest = "/Users/mathisdelaunay/Desktop/mprojet";
-        String modelToDest = "/Users/mathisdelaunay/Desktop/mprojet";
-        String modelPath = "/Users/mathisdelaunay/Desktop/mprojet/model.zip";
-        String resultFolder = "/Users/mathisdelaunay/Desktop/mprojet/out";
+        String pathToUnzip = "D:\\workspace\\fraude-gftm\\IHMA2S1-Lien de dépôt-47347_2017_TP4Note.zip";
+        String pathToDest = "D:\\workspace\\fraude-gftm\\folderTounzip";
+        String modelToDest = "D:\\workspace\\fraude-gftmUnzipedModel";
+        String modelPath = "D:\\workspace\\fraude-gftm\\IHM_2017_TP4Note_NOM_prenom.zip";
+        String resultFolder = "D:\\workspace\\fraude-gftm";
 
         Logger.info("Unzipping ...");
 
@@ -77,11 +75,15 @@ public class FraudingerApplication {
         exam.accept(new ModelSuppressionFilter());
         exam.accept(new SpaceSeparatorFilter());
 
-        for(Student currentStrudent : exam.getStudents()){
-           CalculatorCommandFactory factory = CalculatorCommandFactory.init(exam,currentStrudent);
+        for(Student currentStudent : exam.getStudents()){
+           CalculatorCommandFactory factory = CalculatorCommandFactory.init(exam,currentStudent);
            HashMap<String,Double[]> commandsScores = factory.executeAllCommands();
-           currentStrudent.setScores(commandsScores);
-           printCommandsForOneStudent(currentStrudent,exam.getStudents(),commandsScores);
+            currentStudent.setScores(commandsScores);
+            printCommandsForOneStudent(currentStudent,exam.getStudents(),commandsScores);
+        }
+        exam.sortStudentsByScore();
+        for(Student currentStudent : exam.getStudents()){
+            System.out.println(currentStudent.getName()+" - "+currentStudent.getMaxScore());
         }
 
         try {
@@ -106,5 +108,6 @@ public class FraudingerApplication {
             Logger.info("\n");
         });
     }
+
 
 }

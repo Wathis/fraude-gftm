@@ -6,6 +6,7 @@ import java.util.List;
 public class Student extends Person {
 
     private HashMap<String, Double[]> scores;
+    private Double maxScore ;
 
     public Student(String name, String directoryPath) {
         super(name,directoryPath);
@@ -31,5 +32,13 @@ public class Student extends Person {
                 "name='" + getName() + '\'' +
                 ", directoryPath='" + getDirectoryPath() + '\'' +
                 '}';
+    }
+
+    public void setMaxScore(Double maxScore){
+        this.maxScore = maxScore;
+    }
+
+    public  Double getMaxScore(){
+        return  this.maxScore;
     }
 }
