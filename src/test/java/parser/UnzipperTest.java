@@ -18,7 +18,7 @@ public class UnzipperTest {
 	@Parameterized.Parameters(name = "{0}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                {"src/test/ressources/modele.zip","src/test/ressources/rendu_eleve.zip"}
+                {"src/test/ressources/modele.zip","src/test/ressources/DEPOT2019-1.zip"}
         });
     }
 

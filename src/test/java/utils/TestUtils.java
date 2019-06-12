@@ -41,7 +41,7 @@ public class TestUtils {
             "Logger.info(\"Voici salut : \" + salut)",
             "}",
             "{",
-            "// code d'un eleve qui a copié",
+            "// code d'un eleve qui a copie",
             "}"
     );
 
@@ -58,7 +58,41 @@ public class TestUtils {
             "System.out.println(\"Voici salut : \" + salut)",
             "}",
             "{",
-            "// code d'un eleve qui a copié",
+            "// code d'un eleve qui a copie",
+            "}"
+    );
+
+    public static final List<String> STUDENT_IMPORTATION2 = Arrays.asList(
+            "{",
+            "import java.util.List;",
+            "import java.util.Arra;",
+            "int salut = 0;",
+            "salut = salut + 1;",
+            "// Je met un commaire",
+            "if (salut > 2) {",
+            "   salut = salut + 1;",
+            "}",
+            "System.out.println(\"Voici salut : \" + salut)",
+            "}",
+            "{",
+            "// code d'un eleve qui a copie",
+            "}"
+    );
+
+    public static final List<String> STUDENT_IMPORTATION3 = Arrays.asList(
+            "{",
+            "import java.util.List;",
+            "import java.util.Arrays;",
+            "int salut = 0;",
+            "salut = salut + 1;",
+            "// Je met un commaire",
+            "if (salut > 2) {",
+            "   salut = salut + 1;",
+            "}",
+            "System.out.println(\"Voici salut : \" + salut)",
+            "}",
+            "{",
+            "// code d'un eleve qui a copie",
             "}"
     );
 
@@ -82,11 +116,11 @@ public class TestUtils {
                     "Logger.info(\"Voici salut : \" + salut)\n" +
                     "}\n" +
                     "{\n" +
-                    "// code d'un eleve qui a copié\n" +
+                    "// code d'un eleve qui a copie\n" +
                     "}\n";
 
-    public static final String STUDENT_MINUS_IMPORTATION = "{int salut = 0;salut = salut + 1;// Je met un commentaireif (salut > 0) {   salut = salut + 1;}System.out.println(\"Voici salut : \" + salut)}{// code d'un eleve qui a copié}";
+    public static final String STUDENT_MINUS_IMPORTATION = "{int salut = 0;salut = salut + 1;// Je met un commentaireif (salut > 0) {   salut = salut + 1;}System.out.println(\"Voici salut : \" + salut)}{// code d'un eleve qui a copie}";
 
-    public static final String MODEL_PROF_MINUS_STUDENT_2 = "[salut = salut + 1;, // Je met un commentaire, if (salut > 0) {,    salut = salut + 1;, Logger.info(\"Voici salut : \" + salut), }, // code d'un eleve qui a copié]";
+    public static final String MODEL_PROF_MINUS_STUDENT_2 = "[salut = salut + 1;, // Je met un commentaire, if (salut > 0) {,    salut = salut + 1;, Logger.info(\"Voici salut : \" + salut), }, // code d'un eleve qui a copie]";
 
 }

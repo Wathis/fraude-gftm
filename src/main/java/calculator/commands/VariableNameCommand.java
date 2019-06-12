@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class VariableNameCommand implements IFraudCalculatorCommand {
-    String[] primitiveClasses = {"int","char"};
+    String[] primitiveClasses = {"byte","short","int","long","float","double","char","boolean"};
     @Override
     public Double[] execute(Exam exam, Student currentStudent) {
         Double[] scores = new Double[exam.getStudents().size()];
@@ -25,19 +25,16 @@ public class VariableNameCommand implements IFraudCalculatorCommand {
                 if(nbVar==0){
                     scores[exam.getStudents().indexOf(student)]=0.0;
                 }else{
-                    int nbCommonVars = 0;
+                    int score=0;
                     for(String var : studentCodeVars) {
                         if (currentStudentCodeVars.contains(var)) {
-                            nbCommonVars++;
                             Logger.info("[" + student.getName() + "][" + currentStudent.getName() + "] New common variable : " + var);
+                            score+=Math.pow(var.length(),2);//On met à la puissance 2 car plus le nom de la variable est long, plus c'est louche (de maniere quadratique)
                         }
                     }
-                    scores[exam.getStudents().indexOf(student)] = (double) nbCommonVars / (double) nbVar;
-
+                    scores[exam.getStudents().indexOf(student)] = Math.min((double) score/10000,1);
                 }
-
             }
-
         });
         return scores;
     }
