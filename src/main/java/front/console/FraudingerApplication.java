@@ -1,4 +1,4 @@
-package front;
+package front.console;
 
 import calculator.CalculatorCommandFactory;
 import filter.ModelSuppressionFilter;

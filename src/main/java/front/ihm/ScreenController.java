@@ -1,9 +1,8 @@
-package ihm.controller;
+package front.ihm;
 
 import exception.UninstantiatedException;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.stage.Screen;
 
 import java.util.HashMap;
 

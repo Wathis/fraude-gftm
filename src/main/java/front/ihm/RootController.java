@@ -1,4 +1,4 @@
-package ihm.controller;
+package front.ihm;
 
 public class RootController {
 

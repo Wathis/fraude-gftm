@@ -1,5 +1,5 @@
-import front.FraudingerApplication;
-import ihm.controller.ScreenController;
+import front.console.FraudingerApplication;
+import front.ihm.ScreenController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +12,7 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception{
-		Parent root = FXMLLoader.load(getClass().getResource("ihm/fxml/root.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/root.fxml"));
 		Scene rootScene = new Scene(root, 400, 300);
 		primaryStage.setTitle("Fraudinger");
 		primaryStage.setResizable(false);
@@ -23,8 +23,8 @@ public class Main extends Application {
 
 	private void setupScenes(Scene rootScene) throws IOException {
 		ScreenController.newInstance(rootScene);
-		ScreenController.getInstance().addScreen("fileChooser", FXMLLoader.load(getClass().getResource("ihm/fxml/fileChooser.fxml")));
-		ScreenController.getInstance().addScreen("settings", FXMLLoader.load(getClass().getResource("ihm/fxml/settings.fxml")));
+		ScreenController.getInstance().addScreen("fileChooser", FXMLLoader.load(getClass().getResource("fileChooser.fxml")));
+		ScreenController.getInstance().addScreen("settings", FXMLLoader.load(getClass().getResource("settings.fxml")));
 		ScreenController.getInstance().activate("fileChooser");
 	}
 
@@ -36,6 +36,5 @@ public class Main extends Application {
 			fraudingerApplication.launch();
 		}
 	}
-
 
 }
