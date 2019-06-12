@@ -56,9 +56,9 @@ public class CalculatorCommandFactory {
     public static CalculatorCommandFactory init(Exam exam, Student currentStudent) {
         CalculatorCommandFactory cf = new CalculatorCommandFactory(exam,currentStudent);
         cf.addCommand("Similar code command", new SimilarCodeCommand());
-//        cf.addCommand("Coding habits", new CodingHabitsCommand());
-//        cf.addCommand("Variable Name Command", new VariableNameCommand());
-//        cf.addCommand("Ordonate Word Command", new OrdonateWordCommand());
+        cf.addCommand("Coding habits", new CodingHabitsCommand());
+        cf.addCommand("Variable Name Command", new VariableNameCommand());
+        cf.addCommand("Ordonate Word Command", new OrdonateWordCommand());
         return cf;
     }
 }

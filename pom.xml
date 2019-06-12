@@ -32,6 +32,7 @@
             <artifactId>excel-io</artifactId>
             <version>1.0</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -97,6 +98,15 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.2</version>
+                <configuration>
+                    <mainClass>HelloFX</mainClass>
                 </configuration>
             </plugin>
         </plugins>

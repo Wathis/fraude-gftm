@@ -1,7 +1,7 @@
 package command;
 
 import calculator.CalculatorCommandFactory;
-import calculator.commands.ExampleCommand;
+import calculator.commands.VariableNameCommand;
 import model.AuthorType;
 import model.Exam;
 import model.File;
@@ -24,7 +24,7 @@ public class CalculatorCommandFactoryTest {
         secondStudent.setFiles(Arrays.asList(new File("",STUDENT_1, AuthorType.STUDENT,secondStudent)));
         Exam exam = new Exam(MODEL_PROF,Arrays.asList(firstStudent,secondStudent));
         CalculatorCommandFactory calculatorCommandFactory = CalculatorCommandFactory.init(exam,firstStudent);
-        calculatorCommandFactory.addCommand("Example Command", new ExampleCommand());
+        calculatorCommandFactory.addCommand("Example Command", new VariableNameCommand());
         HashMap<String,Double[]> score = calculatorCommandFactory.executeAllCommands();
         Assert.assertNotNull(score);
     }
