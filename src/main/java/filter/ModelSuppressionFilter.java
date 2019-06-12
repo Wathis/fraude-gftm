@@ -19,10 +19,11 @@ public class ModelSuppressionFilter implements FilterVisitor {
         List<Student> students = exam.getStudents();
         students.forEach(student -> {
             Patch<String> patch = null;
+            Logger.info("[" + student.getName() + "] ModelSuppressionFilter processing ...");
             try {
                 patch = DiffUtils.diff(professorLines, student.getFilesLines());
             } catch (DiffException e) {
-                Logger.info(e.getMessage());
+                Logger.err(e.getMessage());
                 return;
             }
             List<String> studentLines = new LinkedList<>();

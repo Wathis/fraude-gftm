@@ -121,8 +121,10 @@ public class Unzipper {
 				createParent(filePath);
 				writeFile(zipIn, filePath);
 				if (recursive) {
-					String studentDir = addStudentToList(entry, filePath);
-					unzip(filePath, studentDir, false, false);
+					if (!filePath.contains("_MACOSX")) {
+						String studentDir = addStudentToList(entry, filePath);
+						unzip(filePath, studentDir, false, false);
+					}
 				}
 			} else {
 				writeFile(zipIn, filePath);
@@ -141,7 +143,6 @@ public class Unzipper {
 		String studentDir = file.getParentFile().getAbsolutePath() + "/" + studentName;
 		File dir = new File(studentDir);
 		dir.mkdir();
-
 		students.add(new Student(studentName, studentDir));
 		return studentDir;
 	}

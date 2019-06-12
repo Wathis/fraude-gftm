@@ -1,6 +1,7 @@
 package model;
 
 import filter.FilterVisitor;
+import utils.Logger;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Exam {
     }
 
     public void accept(FilterVisitor filterVisitor) {
+        Logger.info("Applying filter " + filterVisitor.getClass());
         filterVisitor.visit(this);
     }
 

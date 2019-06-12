@@ -29,8 +29,10 @@ public class CalculatorCommandFactory {
 
     public Double[] executeCommand(String name) {
         if (this.commands.containsKey(name) ) {
+            Logger.info("[" + currentStudent.getName() + "] Executing " + name);
             return this.commands.get(name).execute(exam,currentStudent);
         }
+        Logger.err("[" + currentStudent.getName() + "] Can't execute " + name + ". The command doesn't exist" );
         return null;
     }
 
@@ -54,9 +56,9 @@ public class CalculatorCommandFactory {
     public static CalculatorCommandFactory init(Exam exam, Student currentStudent) {
         CalculatorCommandFactory cf = new CalculatorCommandFactory(exam,currentStudent);
         cf.addCommand("Similar code command", new SimilarCodeCommand());
-        cf.addCommand("Coding habits", new CodingHabitsCommand());
-        cf.addCommand("Variable Name Command", new VariableNameCommand());
-        cf.addCommand("Ordonate Word Command", new OrdonateWordCommand());
+//        cf.addCommand("Coding habits", new CodingHabitsCommand());
+//        cf.addCommand("Variable Name Command", new VariableNameCommand());
+//        cf.addCommand("Ordonate Word Command", new OrdonateWordCommand());
         return cf;
     }
 }

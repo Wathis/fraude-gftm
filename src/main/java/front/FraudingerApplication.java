@@ -43,11 +43,11 @@ public class FraudingerApplication {
 //        Logger.info("Enter the folder path you want the CSV result");
 //        String resultFolder = scanner.nextLine();
 
-        String pathToUnzip = "/Users/mathisdelaunay/Desktop/mprojet/projet.zip";
-        String pathToDest = "/Users/mathisdelaunay/Desktop/mprojet";
-        String modelToDest = "/Users/mathisdelaunay/Desktop/mprojet";
-        String modelPath = "/Users/mathisdelaunay/Desktop/mprojet/model.zip";
-        String resultFolder = "/Users/mathisdelaunay/Desktop/mprojet/out";
+        String pathToUnzip = "/Users/mathisdelaunay/Desktop/triche/DEPOT2019.zip";
+        String pathToDest = "/Users/mathisdelaunay/Desktop/triche";
+        String modelToDest = "/Users/mathisdelaunay/Desktop/triche";
+        String modelPath = "/Users/mathisdelaunay/Desktop/triche/IHM_Projet_JDK8.zip";
+        String resultFolder = "/Users/mathisdelaunay/Desktop/triche/out";
 
         Logger.info("Unzipping ...");
 
@@ -73,9 +73,13 @@ public class FraudingerApplication {
         Teacher teacher = Unzipper.getTeacher();
         addListOfFilesToPerson(teacher);
 
+        Logger.info("Applying filter ...");
+
         exam.setProfessorLines(teacher.getFilesLines());
         exam.accept(new ModelSuppressionFilter());
         exam.accept(new SpaceSeparatorFilter());
+
+        Logger.info("Starting commands ...");
 
         for(Student currentStrudent : exam.getStudents()){
            CalculatorCommandFactory factory = CalculatorCommandFactory.init(exam,currentStrudent);

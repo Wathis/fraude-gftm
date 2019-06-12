@@ -4,6 +4,7 @@ import calculator.IFraudCalculatorCommand;
 import filter.SpaceSeparatorFilter;
 import model.Exam;
 import model.Student;
+import utils.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +29,7 @@ public class VariableNameCommand implements IFraudCalculatorCommand {
                     for(String var : studentCodeVars) {
                         if (currentStudentCodeVars.contains(var)) {
                             nbCommonVars++;
+                            Logger.info("[" + student.getName() + "][" + currentStudent.getName() + "] New common variable : " + var);
                         }
                     }
                     scores[exam.getStudents().indexOf(student)] = (double) nbCommonVars / (double) nbVar;
