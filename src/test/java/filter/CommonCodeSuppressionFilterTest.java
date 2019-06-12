@@ -24,7 +24,7 @@ public class CommonCodeSuppressionFilterTest {
 	@Parameterized.Parameters(name = "{index}")
 	public static Collection<Object[]> data() {
 		return Arrays.asList(new Object[][] { { STUDENT_IMPORTATION, STUDENT_IMPORTATION2, STUDENT_IMPORTATION3,
-				"import java.util.Arrays; // Je met un commentaireif (salut > 0) {" }, });
+				"import java.util.Arrays;// Je met un commentaireif (salut > 0) {" }, });
 	}
 
 	@Parameterized.Parameter
@@ -51,6 +51,10 @@ public class CommonCodeSuppressionFilterTest {
 		Exam exam = new Exam(null, Arrays.asList(student, student2, student3));
 		exam.accept(new CommonCodeSuppressionFilter());
 
+		System.out.println(exam.getStudents().get(0).getFilesLines());
+		System.out.println(exam.getStudents().get(1).getFilesLines());
+		System.out.println(exam.getStudents().get(2).getFilesLines());
+
 		List<String> fileLines = exam.getStudents().get(0).getFilesLines();
 		String result = "";
 		StringBuilder lines = new StringBuilder();
@@ -58,8 +62,8 @@ public class CommonCodeSuppressionFilterTest {
 			lines.append(string);
 		}
 		result = lines.toString();
-		System.out.println("RESULT : \n " + result.trim());
+		System.out.println("RESULT : \n" + result.trim());
 		System.out.println("EXPECTED : \n" + expectedResult.trim());
-		//Assert.assertEquals(expectedResult.trim(), result);
+		Assert.assertEquals(expectedResult.trim(), result);
 	}
 }

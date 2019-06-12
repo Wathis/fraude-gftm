@@ -3,10 +3,13 @@ package filter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.crypto.spec.PSource;
 
 import com.github.difflib.DiffUtils;
 import com.github.difflib.algorithm.DiffException;
@@ -26,8 +29,10 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 		/*
 		 * Represents the list of common code with others students
 		 */
-		List<HashMap<Integer, String>> commonCodes = new ArrayList<HashMap<Integer, String>>();
+		List<LinkedHashMap<Integer, String>> commonCodes = new ArrayList<LinkedHashMap<Integer, String>>();
+		HashMap<Student, HashMap<Integer, String>> codeToDeleteByStudent = new HashMap<Student, HashMap<Integer, String>>();
 		for (Student student : students) {
+			commonCodes.clear();
 			// Get other students
 			List<Student> otherStudents = new ArrayList<Student>();
 			otherStudents.addAll(students);
@@ -36,14 +41,20 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 			for (Student browsedStudent : otherStudents) {
 				// get the delta between current student with the student who is
 				// browsed
-				HashMap<Integer, String> common = getCommonCode(student.getFilesLines(),
+				LinkedHashMap<Integer, String> common = getCommonCode(student.getFilesLines(),
 						browsedStudent.getFilesLines());
 				commonCodes.add(common);
 			}
 			HashMap<Integer, String> commonLines = getCommonBetweenAllDelta(commonCodes);
-			List<String> studentLine = student.getFilesLines();
-			studentLine = removeCommonCode(studentLine, commonLines);
-			student.setFileLines(studentLine);
+			codeToDeleteByStudent.put(student, commonLines);
+		}
+		deleteCommonCodeOfStudents(students, codeToDeleteByStudent);
+	}
+
+	private void deleteCommonCodeOfStudents(List<Student> students,
+			HashMap<Student, HashMap<Integer, String>> codeToDeleteByStudent) {
+		for (Student student : students) {
+			student.setFileLines(removeCommonCode(student.getFilesLines(), codeToDeleteByStudent.get(student)));
 		}
 
 	}
@@ -61,9 +72,9 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 		return studentLine;
 	}
 
-	private HashMap<Integer, String> getCommonBetweenAllDelta(List<HashMap<Integer, String>> commonCodes) {
-		HashMap<Integer, String> fileReference = new HashMap<Integer, String>();
-		HashMap<Integer, String> result = new HashMap<Integer, String>();
+	private HashMap<Integer, String> getCommonBetweenAllDelta(List<LinkedHashMap<Integer, String>> commonCodes) {
+		LinkedHashMap<Integer, String> fileReference = new LinkedHashMap<Integer, String>();
+		LinkedHashMap<Integer, String> result = new LinkedHashMap<Integer, String>();
 		fileReference = commonCodes.get(0);
 		commonCodes.remove(0);
 		for (Map.Entry<Integer, String> lineAnalyzed : fileReference.entrySet()) {
@@ -75,7 +86,12 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 	}
 
 	private boolean isCommonWithAllFile(Entry<Integer, String> lineAnalyzed,
-			List<HashMap<Integer, String>> commonCodes) {
+			List<LinkedHashMap<Integer, String>> commonCodes) {
+		if(commonCodes.size() == 0){
+			if(lineAnalyzed.getValue() == null)
+				return false;
+			return true;
+		}
 		for (HashMap<Integer, String> hashMap : commonCodes) {
 			if (!isCommon(lineAnalyzed, hashMap))
 				return false;
@@ -106,14 +122,23 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 			previous = hashmap.size() - 2;
 		}
 		T entryValue = entry.getValue();
-		while (previous > -1 && next < hashmap.size()) {
+		T value = null;
+		if (entryValue == null)
+			return -1;
+		while (previous > -1 || next < hashmap.size()) {
 			if (hashmap.containsKey(next)) {
-				if (hashmap.get(next).equals(entryValue))
-					return next;
+				value = hashmap.get(next);
+				if (value != null) {
+					if (value.equals(entryValue))
+						return next;
+				}
 			}
 			if (hashmap.containsKey(previous)) {
-				if (hashmap.get(previous).equals(entryValue))
-					return previous;
+				value = hashmap.get(previous);
+				if (value != null) {
+					if (value.equals(entryValue))
+						return previous;
+				}
 			}
 			next++;
 			previous--;
@@ -145,8 +170,10 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 		return patch.getDeltas();
 	}
 
-	private <T> HashMap<Integer, T> getCommonCode(List<T> list1, List<T> list2) {
-		HashMap<Integer, T> numberLine = new HashMap<Integer, T>();
+	// TODO : PAsser direct la hashmap des student pour economiser temps de
+	// calcul ?
+	private <T> LinkedHashMap<Integer, T> getCommonCode(List<T> list1, List<T> list2) {
+		LinkedHashMap<Integer, T> numberLine = new LinkedHashMap<Integer, T>();
 		for (int i = 0; i < list1.size(); i++) {
 			numberLine.put(i, (T) list1.get(i));
 		}
@@ -155,7 +182,7 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 		ListIterator<Integer> positionsDelta = listOfPositionToDelete.listIterator();
 		while (positionsDelta.hasNext()) {
 			Integer position = positionsDelta.next();
-			numberLine.remove(position);
+			numberLine.put(position, null);
 		}
 		return numberLine;
 	}
@@ -165,7 +192,7 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 		for (AbstractDelta<T> delta : deltas) {
 			int nbLine = delta.getSource().getLines().size();
 			int position = delta.getSource().getPosition();
-			for(int i = position; i< position+nbLine; i++){
+			for (int i = position; i < position + nbLine; i++) {
 				positionsToDelete.add(i);
 			}
 		}
