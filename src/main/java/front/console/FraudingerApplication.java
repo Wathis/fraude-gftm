@@ -63,7 +63,10 @@ public class FraudingerApplication {
                 e.printStackTrace();
             }
         }
+        startCommands(resultFolder);
+    }
 
+    public static void startCommands(String resultFolder) {
         Exam exam = new Exam(new ArrayList<>(),Unzipper.getStudents());
         exam.getStudents().forEach(student -> {
             addListOfFilesToPerson(student);
@@ -79,8 +82,8 @@ public class FraudingerApplication {
 
         Logger.info("Starting commands ...");
         for(Student currentStudent : exam.getStudents()){
-           CalculatorCommandFactory factory = CalculatorCommandFactory.init(exam,currentStudent);
-           HashMap<String,Double[]> commandsScores = factory.executeAllCommands();
+            CalculatorCommandFactory factory = CalculatorCommandFactory.init(exam,currentStudent);
+            HashMap<String,Double[]> commandsScores = factory.executeAllCommands();
             currentStudent.setScores(commandsScores);
             printCommandsForOneStudent(currentStudent,exam.getStudents(),commandsScores);
         }
@@ -97,7 +100,7 @@ public class FraudingerApplication {
         }
     }
 
-    private void printCommandsForOneStudent(Student student, List<Student> students, HashMap<String,Double[]> commandsScores) {
+    private static void printCommandsForOneStudent(Student student, List<Student> students, HashMap<String,Double[]> commandsScores) {
         Logger.info("\n---------------------------------");
         Logger.info("|       " + student.getName());
         Logger.info("---------------------------------");

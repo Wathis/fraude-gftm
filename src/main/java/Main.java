@@ -13,7 +13,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception{
 		Parent root = FXMLLoader.load(getClass().getResource("/root.fxml"));
-		Scene rootScene = new Scene(root, 400, 300);
+		Scene rootScene = new Scene(root, 640, 540);
+		rootScene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 		primaryStage.setTitle("Fraudinger");
 		primaryStage.setResizable(false);
 		primaryStage.setScene(rootScene);
