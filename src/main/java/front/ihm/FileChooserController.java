@@ -1,21 +1,26 @@
 package front.ihm;
 
+import calculator.CalculatorCommandFactory;
+import filter.FilterFactory;
+import io.XLSWriter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
+import model.Exam;
+import model.Student;
+import model.Teacher;
 import parser.Unzipper;
 import utils.Logger;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-import static front.console.FraudingerApplication.startCommands;
+import static parser.FileReader.addListOfFilesToPerson;
 
 
 public class FileChooserController {
@@ -85,8 +90,40 @@ public class FileChooserController {
                 e.printStackTrace();
                 return;
             }
-            startCommands(studentsZipFile.getParent() + File.separator + "out/");
+            runCommands(studentsZipFile.getParent() + File.separator + "out/");
         }).start();
+    }
+
+    public void runCommands(String resultFolder) {
+        Exam exam = new Exam(new ArrayList<>(),Unzipper.getStudents());
+        exam.getStudents().forEach(student -> {
+            addListOfFilesToPerson(student);
+        });
+        Teacher teacher = Unzipper.getTeacher();
+        addListOfFilesToPerson(teacher);
+
+        Logger.info("Applying filter ...");
+
+        exam.setProfessorLines(teacher.getFilesLines());
+        FilterFactory.getInstance().executeAllActivatedFilters(exam);
+
+        Logger.info("Starting commands ...");
+        for(Student currentStudent : exam.getStudents()){
+            CalculatorCommandFactory factory = CalculatorCommandFactory.init(exam,currentStudent);
+            HashMap<String,Double[]> commandsScores = factory.executeAllCommands();
+            currentStudent.setScores(commandsScores);
+        }
+        exam.sortStudentsByScore();
+        for(Student currentStudent : exam.getStudents()){
+            System.out.println(currentStudent.getName()+" - "+currentStudent.getMaxScore());
+        }
+
+        try {
+            XLSWriter.write(exam.getStudents(),resultFolder);
+        } catch (IOException e) {
+            Logger.err("Impossible d'exporter au format csv");
+            Logger.err(e.getMessage());
+        }
     }
 
     @FXML

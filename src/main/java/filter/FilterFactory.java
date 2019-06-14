@@ -1,16 +1,7 @@
 package filter;
 
-import calculator.commands.CodingHabitsCommand;
-import calculator.commands.OrdonateWordCommand;
-import calculator.commands.SimilarCodeCommand;
-import calculator.commands.VariableNameCommand;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import utils.Logger;
 import model.Exam;
-import model.Student;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,20 +38,16 @@ public class FilterFactory {
             }
         }
         try {
-            exam.accept((FilterVisitor) filter.getConstructor(Exam.class).newInstance(exam));
+            exam.accept((FilterVisitor) filter.newInstance());
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
         return exam;
     }
 
-    public Exam executeAllFilters(Exam exam) {
+    public Exam executeAllActivatedFilters(Exam exam) {
         for (Class filter : filtersActivated) {
             executeFilers(exam,filter);
         }
