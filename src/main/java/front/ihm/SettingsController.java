@@ -29,9 +29,13 @@ public class SettingsController {
         List<Class> activatedFilters = filterFactory.getActivatedFilters();
         HashMap<Class,String> availableFilters = filterFactory.getAvailableFilters();
         for (Class filterClass : availableFilters.keySet()) {
-            FilterCheckboxItem item = new FilterCheckboxItem(availableFilters.get(filterClass) + "(" + filterClass.getName() + ")", activatedFilters.contains(filterClass));
+            FilterCheckboxItem item = new FilterCheckboxItem(filterClass,availableFilters.get(filterClass) + "(" + filterClass.getName() + ")", activatedFilters.contains(filterClass));
             item.onProperty().addListener((obs, wasOn, isNowOn) -> {
-                // Change
+                if (isNowOn) {
+                    activatedFilters.add(item.getFilterClass());
+                } else {
+                    activatedFilters.remove(item.getFilterClass());
+                }
             });
             filters.getItems().add(item);
         }

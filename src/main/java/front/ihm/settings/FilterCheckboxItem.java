@@ -8,10 +8,20 @@ import javafx.beans.property.StringProperty;
 public class FilterCheckboxItem {
     private final StringProperty name = new SimpleStringProperty();
     private final BooleanProperty on = new SimpleBooleanProperty();
+    private Class filterClass;
 
-    public FilterCheckboxItem(String name, boolean on) {
+    public FilterCheckboxItem(Class filterClass, String name, boolean on) {
+        this.filterClass = filterClass;
         setName(name);
         setOn(on);
+    }
+
+    public Class getFilterClass() {
+        return filterClass;
+    }
+
+    public void setFilterClass(Class filterClass) {
+        this.filterClass = filterClass;
     }
 
     public final StringProperty nameProperty() {
