@@ -19,9 +19,18 @@ import com.github.difflib.patch.Patch;
 import model.Exam;
 import model.Student;
 
+/**
+ * Filter to delete the common code between the student. The filter analyse line by line if at the same position (with a delta of line called DELTA) this line is also in all the other student's code.
+ * If this is true, delete the line and set the new lines to the student
+ * @author Thomas
+ *
+ */
 public class CommonCodeSuppressionFilter implements FilterVisitor {
 
-	private static Integer ECART = 2;
+	/**
+	 * The delta of the line, because the line could no be at the same position in all documents
+	 */
+	private static Integer ECART = 4;
 
 	@Override
 	public void visit(Exam exam) {
@@ -51,6 +60,12 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 		deleteCommonCodeOfStudents(students, codeToDeleteByStudent);
 	}
 
+	/**
+	 * Get the list of the student with the hashmap that contains all the lines to delete by student
+	 * Affect the new lines to the students
+	 * @param students
+	 * @param codeToDeleteByStudent
+	 */
 	private void deleteCommonCodeOfStudents(List<Student> students,
 			HashMap<Student, HashMap<Integer, String>> codeToDeleteByStudent) {
 		for (Student student : students) {
@@ -59,6 +74,12 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 
 	}
 
+	/**
+	 * For a list of a student, remove the lines which are commons with all students (contain in the hashmap)
+	 * @param studentLine
+	 * @param commonLines
+	 * @return
+	 */
 	private List<String> removeCommonCode(List<String> studentLine, HashMap<Integer, String> commonLines) {
 		List<Integer> positions = new ArrayList<Integer>();
 		for (Map.Entry<Integer, String> entry : commonLines.entrySet()) {
@@ -72,6 +93,11 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 		return studentLine;
 	}
 
+	/**
+	 * Return an Hashmap which contains only the common code between all the files analyzed
+	 * @param commonCodes
+	 * @return
+	 */
 	private HashMap<Integer, String> getCommonBetweenAllDelta(List<LinkedHashMap<Integer, String>> commonCodes) {
 		LinkedHashMap<Integer, String> fileReference = new LinkedHashMap<Integer, String>();
 		LinkedHashMap<Integer, String> result = new LinkedHashMap<Integer, String>();
@@ -85,6 +111,12 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 		return result;
 	}
 
+	/**
+	 * Check if the line is common in all files
+	 * @param lineAnalyzed
+	 * @param commonCodes
+	 * @return
+	 */
 	private boolean isCommonWithAllFile(Entry<Integer, String> lineAnalyzed,
 			List<LinkedHashMap<Integer, String>> commonCodes) {
 		if(commonCodes.size() == 0){
@@ -99,6 +131,12 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 		return true;
 	}
 
+	/**
+	 * Check if the line is in the file in parameters and if the line is at the same location in these two files (with delta)
+	 * @param entry
+	 * @param hashmap
+	 * @return
+	 */
 	private <T> boolean isCommon(Entry<Integer, T> entry, HashMap<Integer, T> hashmap) {
 		boolean isCommon = true;
 		int position = existInHashMap(entry, hashmap);
@@ -108,12 +146,26 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 		return isCommon;
 	}
 
+	/**
+	 * Check if the position of Entry is at a position (with delta ECART)
+	 * @param entry
+	 * @param position
+	 * @return
+	 */
 	private <T> boolean isClose(Entry<Integer, T> entry, int position) {
 		if (entry.getKey() - ECART < position && position < entry.getKey() + ECART)
 			return true;
 		return false;
 	}
 
+	/**
+	 * Check if the Entry exists in the hashmap that represents a file.
+	 * The analyze begin at the position of the location of the entry in its own file.
+	 * Then analyze in expension and if the line is found in the file, return the position
+	 * @param entry
+	 * @param hashmap
+	 * @return
+	 */
 	private <T> int existInHashMap(Entry<Integer, T> entry, HashMap<Integer, T> hashmap) {
 		int previous = entry.getKey();
 		int next = entry.getKey();
@@ -146,15 +198,8 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 		return -1;
 	}
 
-	private void print(HashMap<Integer, String> n) {
-		for (Map.Entry<Integer, String> ite : n.entrySet()) {
-			System.out.println("Numero : " + ite.getKey() + " - " + ite.getValue());
-		}
-	}
-
 	/**
 	 * Return the delta (can be change, delete, add) between two list
-	 *
 	 *
 	 * @param list1
 	 * @param list2
@@ -172,6 +217,13 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 
 	// TODO : PAsser direct la hashmap des student pour economiser temps de
 	// calcul ?
+	/**
+	 * Use the DiffUtils to get the delta between two files represented by two lists.
+	 * return an hashmap which all the not common code has been deleted.
+	 * @param list1
+	 * @param list2
+	 * @return
+	 */
 	private <T> LinkedHashMap<Integer, T> getCommonCode(List<T> list1, List<T> list2) {
 		LinkedHashMap<Integer, T> numberLine = new LinkedHashMap<Integer, T>();
 		for (int i = 0; i < list1.size(); i++) {
@@ -187,6 +239,12 @@ public class CommonCodeSuppressionFilter implements FilterVisitor {
 		return numberLine;
 	}
 
+	/**
+	 * Return a list of Integer which represents the position of all the delta (the code not common between files)
+	 * @param deltas
+	 * @param numberLine
+	 * @return
+	 */
 	private <T> List<Integer> getRealPositionsOfDelta(List<AbstractDelta<T>> deltas, HashMap<Integer, T> numberLine) {
 		List<Integer> positionsToDelete = new ArrayList<Integer>();
 		for (AbstractDelta<T> delta : deltas) {

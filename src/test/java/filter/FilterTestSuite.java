@@ -8,7 +8,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         KeywordFilterTest.class,
         ModelSuppressionFilterTest.class,
-        ImportationSuppressionFilterTest.class
+        ImportationSuppressionFilterTest.class,
+        CommonCodeSuppressionFilterTest.class
 })
 public class FilterTestSuite {
 
