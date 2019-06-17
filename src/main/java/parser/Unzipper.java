@@ -135,6 +135,11 @@ public class Unzipper {
 		}
 	}
 
+	public static void resetUnzipper() {
+		students.clear();
+		teacher = null;
+	}
+
 	private static String addStudentToList(ZipEntry entry, String filePath) {
 		File file = new File(filePath);
 

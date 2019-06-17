@@ -23,9 +23,9 @@ public class CalculatorCommandFactoryTest {
         Student secondStudent = new Student("","");
         secondStudent.setFiles(Arrays.asList(new File("",STUDENT_1, AuthorType.STUDENT,secondStudent)));
         Exam exam = new Exam(MODEL_PROF,Arrays.asList(firstStudent,secondStudent));
-        CalculatorCommandFactory calculatorCommandFactory = CalculatorCommandFactory.init(exam,firstStudent);
+        CalculatorCommandFactory calculatorCommandFactory = CalculatorCommandFactory.init();
         calculatorCommandFactory.addCommand("Example Command", new VariableNameCommand());
-        HashMap<String,Double[]> score = calculatorCommandFactory.executeAllCommands();
+        HashMap<String,Double[]> score = calculatorCommandFactory.executeAllCommands(exam,firstStudent);
         Assert.assertNotNull(score);
     }
 

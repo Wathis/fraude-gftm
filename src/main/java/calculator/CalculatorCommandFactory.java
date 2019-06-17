@@ -12,13 +12,18 @@ import java.util.HashMap;
 
 public class CalculatorCommandFactory {
     private final HashMap<String, IFraudCalculatorCommand> commands;
-    private Exam exam;
-    private Student currentStudent;
+    private final HashMap<String,IFraudCalculatorCommand> availableCommands = new HashMap<String, IFraudCalculatorCommand>()
+    {{
+        put("Coding habits",new CodingHabitsCommand());
+        put("Ordonate word",new OrdonateWordCommand());
+        put("Similar code",new SimilarCodeCommand());
+        put("Variable name",new VariableNameCommand());
+    }};
 
-    private CalculatorCommandFactory(Exam exam, Student currentStudent) {
+    private static CalculatorCommandFactory instance;
+
+    private CalculatorCommandFactory() {
         this.commands = new HashMap<>();
-        this.exam = exam;
-        this.currentStudent = currentStudent;
     }
 
     public void addCommand(String name, IFraudCalculatorCommand command) {
@@ -27,7 +32,9 @@ public class CalculatorCommandFactory {
 
     public void removeCommand(String name) { this.commands.remove(name); }
 
-    public Double[] executeCommand(String name) {
+    public void removeAllCommands() { this.commands.clear(); }
+
+    public Double[] executeCommand(String name,Exam exam, Student currentStudent) {
         if (this.commands.containsKey(name) ) {
             Logger.info("[" + currentStudent.getName() + "] Executing " + name);
             return this.commands.get(name).execute(exam,currentStudent);
@@ -36,16 +43,24 @@ public class CalculatorCommandFactory {
         return null;
     }
 
-    public HashMap<String,Double[]> executeAllCommands() {
+    public HashMap<String,Double[]> executeAllCommands(Exam exam, Student currentStudent) {
         HashMap<String, Double[]> commandsScores = new HashMap<>();
         if (commands.size() == 0) {
             return null;
         }
         commands.keySet().forEach(commandName -> {
-            Double[] commandScores = executeCommand(commandName);
+            Double[] commandScores = executeCommand(commandName,exam,currentStudent);
             commandsScores.put(commandName,commandScores);
         });
         return commandsScores;
+    }
+
+    public HashMap<String, IFraudCalculatorCommand> getCommands() {
+        return commands;
+    }
+
+    public HashMap<String, IFraudCalculatorCommand> getAvailableCommands() {
+        return availableCommands;
     }
 
     public void listCommands() {
@@ -53,12 +68,23 @@ public class CalculatorCommandFactory {
         this.commands.keySet().stream().forEach(System.out::println);
     }
 
-    public static CalculatorCommandFactory init(Exam exam, Student currentStudent) {
-        CalculatorCommandFactory cf = new CalculatorCommandFactory(exam,currentStudent);
-        cf.addCommand("Similar code command", new SimilarCodeCommand());
+    public static CalculatorCommandFactory init() {
+        CalculatorCommandFactory cf = getInstance();
+        cf.removeAllCommands();
+        cf.addCommand("Similar code", new SimilarCodeCommand());
         cf.addCommand("Coding habits", new CodingHabitsCommand());
-        cf.addCommand("Variable Name Command", new VariableNameCommand());
-        cf.addCommand("Ordonate Word Command", new OrdonateWordCommand());
+        cf.addCommand("Variable name", new VariableNameCommand());
+        cf.addCommand("Ordonate word", new OrdonateWordCommand());
         return cf;
     }
+
+
+    public static CalculatorCommandFactory getInstance() {
+        if (instance == null) {
+            instance = new CalculatorCommandFactory();
+            init();
+        }
+        return instance;
+    }
+
 }

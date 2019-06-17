@@ -1,5 +1,6 @@
 package io;
 
+import model.Exam;
 import model.Student;
 import org.junit.Assert;
 import org.junit.Test;
@@ -35,7 +36,9 @@ public class XLSWriterTest {
         baptisteScore.put(SECOND_COMMAND_SCORE,new Double[]{1.0,0.0});
         baptisteStudent.setScores(baptisteScore);
 
-        XLSWriter.write(Arrays.asList(jeanStudent,baptisteStudent),FOLDER_OUT);
+        Exam exam = new Exam(null,Arrays.asList(jeanStudent,baptisteStudent));
+
+        XLSWriter.write(exam,FOLDER_OUT);
         File firstCommand = new File(FOLDER_OUT + File.separator + FIRST_COMMAND_SCORE + ".xlsx");
         File secondCommand = new File(FOLDER_OUT + File.separator + SECOND_COMMAND_SCORE + ".xlsx");
 

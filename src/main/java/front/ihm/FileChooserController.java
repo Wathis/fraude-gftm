@@ -105,27 +105,27 @@ public class FileChooserController {
             exam.setProfessorLines(teacher.getFilesLines());
         }
 
-        Logger.info("Applying filter ...");
+        Logger.info("Applying filter(s) ...",true);
 
         FilterFactory.getInstance().executeAllActivatedFilters(exam);
 
-        Logger.info("Starting commands ...");
+        Logger.info("Starting commands ...",true);
         for(Student currentStudent : exam.getStudents()){
-            CalculatorCommandFactory factory = CalculatorCommandFactory.init(exam,currentStudent);
-            HashMap<String,Double[]> commandsScores = factory.executeAllCommands();
+            CalculatorCommandFactory factory = CalculatorCommandFactory.getInstance();
+            HashMap<String,Double[]> commandsScores = factory.executeAllCommands(exam,currentStudent);
             currentStudent.setScores(commandsScores);
-        }
-        exam.sortStudentsByScore();
-        for(Student currentStudent : exam.getStudents()){
-            System.out.println(currentStudent.getName()+" - "+currentStudent.getMaxScore());
         }
 
         try {
-            XLSWriter.write(exam.getStudents(),resultFolder);
+            XLSWriter.write(exam,resultFolder);
+            Logger.info("Analyse terminée.", true);
+            Logger.info("Dossier contenant les résultats : \n" + resultFolder,true);
         } catch (IOException e) {
             Logger.err("Impossible d'exporter au format csv");
             Logger.err(e.getMessage());
         }
+
+        Unzipper.resetUnzipper();
     }
 
     @FXML

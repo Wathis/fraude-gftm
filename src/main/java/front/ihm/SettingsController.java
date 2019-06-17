@@ -1,9 +1,10 @@
 package front.ihm;
 
+import calculator.CalculatorCommandFactory;
+import calculator.IFraudCalculatorCommand;
 import filter.FilterFactory;
-import front.ihm.settings.FilterCheckboxItem;
+import front.ihm.settings.CheckboxItem;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -18,10 +19,13 @@ public class SettingsController {
 
     @FXML
     private ListView filters;
+    @FXML
+    private ListView commands;
 
     @FXML
     public void initialize() {
         setupFiltersListView();
+        setupCommandsListView();
     }
 
     public void setupFiltersListView() {
@@ -29,20 +33,44 @@ public class SettingsController {
         List<Class> activatedFilters = filterFactory.getActivatedFilters();
         HashMap<Class,String> availableFilters = filterFactory.getAvailableFilters();
         for (Class filterClass : availableFilters.keySet()) {
-            FilterCheckboxItem item = new FilterCheckboxItem(filterClass,availableFilters.get(filterClass) + "(" + filterClass.getName() + ")", activatedFilters.contains(filterClass));
+            CheckboxItem item = new CheckboxItem(filterClass,availableFilters.get(filterClass) + "(" + filterClass.getName() + ")", activatedFilters.contains(filterClass));
             item.onProperty().addListener((obs, wasOn, isNowOn) -> {
                 if (isNowOn) {
-                    activatedFilters.add(item.getFilterClass());
+                    activatedFilters.add((Class) item.getContent());
                 } else {
-                    activatedFilters.remove(item.getFilterClass());
+                    activatedFilters.remove(item.getContent());
                 }
             });
             filters.getItems().add(item);
         }
 
-        filters.setCellFactory(CheckBoxListCell.forListView(new Callback<FilterCheckboxItem, ObservableValue<Boolean>>() {
+        filters.setCellFactory(CheckBoxListCell.forListView(new Callback<CheckboxItem, ObservableValue<Boolean>>() {
             @Override
-            public ObservableValue<Boolean> call(FilterCheckboxItem item) {
+            public ObservableValue<Boolean> call(CheckboxItem item) {
+                return item.onProperty();
+            }
+        }));
+    }
+
+    public void setupCommandsListView() {
+        CalculatorCommandFactory commandFactory = CalculatorCommandFactory.init();
+        HashMap<String, IFraudCalculatorCommand> activatedCommands = commandFactory.getCommands();
+        HashMap<String,IFraudCalculatorCommand> availableCommands = commandFactory.getAvailableCommands();
+        for (String commandName : availableCommands.keySet()) {
+            CheckboxItem item = new CheckboxItem(commandName, activatedCommands.keySet().contains(commandName));
+            item.onProperty().addListener((obs, wasOn, isNowOn) -> {
+                if (isNowOn) {
+                    commandFactory.addCommand(item.getName(),availableCommands.get(item.getName()));
+                } else {
+                    commandFactory.removeCommand(item.getName());
+                }
+            });
+            commands.getItems().add(item);
+        }
+
+        commands.setCellFactory(CheckBoxListCell.forListView(new Callback<CheckboxItem, ObservableValue<Boolean>>() {
+            @Override
+            public ObservableValue<Boolean> call(CheckboxItem item) {
                 return item.onProperty();
             }
         }));

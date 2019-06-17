@@ -4,24 +4,30 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.ListCell;
+import javafx.scene.paint.Color;
 
-public class FilterCheckboxItem {
+public class CheckboxItem {
     private final StringProperty name = new SimpleStringProperty();
     private final BooleanProperty on = new SimpleBooleanProperty();
-    private Class filterClass;
+    private Object content;
 
-    public FilterCheckboxItem(Class filterClass, String name, boolean on) {
-        this.filterClass = filterClass;
+    public CheckboxItem(Object content, String name, boolean on) {
+        this.content = content;
+        setName(name);
+        setOn(on);
+    }
+    public CheckboxItem(String name, boolean on) {
         setName(name);
         setOn(on);
     }
 
-    public Class getFilterClass() {
-        return filterClass;
+    public Object getContent() {
+        return content;
     }
 
-    public void setFilterClass(Class filterClass) {
-        this.filterClass = filterClass;
+    public void setContent(Object content) {
+        this.content = content;
     }
 
     public final StringProperty nameProperty() {

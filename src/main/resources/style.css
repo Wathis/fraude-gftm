@@ -3,11 +3,45 @@
     -fx-faint-focus-color: transparent;
  }
 
+* {
+
+    font-family: 'Avenir Next LT Pro';
+}
+
  .list-view .list-cell:even {
      -fx-background-color: transparent;
-     -fx-text-fill: black;
+     -fx-text-fill: white;
  }
  .list-view .list-cell:odd {
      -fx-background-color: transparent;
-     -fx-text-fill: black;
+     -fx-text-fill: white;
+ }
+
+ .container {
+    -fx-background-color: #34495e;
+ }
+
+ .label {
+    -fx-text-fill: white;
+ }
+
+ .console {
+    -fx-highlight-fill: red;
+    -fx-control-inner-background: #2c3e50;
+    -fx-highlight-text-fill: white;
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+ }
+
+ .whiteButton {
+    -fx-background-radius: 25px;
+    -fx-border-width: 0px;
+    -fx-background-color : white;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+ }
+
+ .title {
+    -fx-text-fill: white;
  }

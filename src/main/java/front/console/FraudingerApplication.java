@@ -82,18 +82,14 @@ public class FraudingerApplication {
 
         Logger.info("Starting commands ...");
         for(Student currentStudent : exam.getStudents()){
-            CalculatorCommandFactory factory = CalculatorCommandFactory.init(exam,currentStudent);
-            HashMap<String,Double[]> commandsScores = factory.executeAllCommands();
+            CalculatorCommandFactory factory = CalculatorCommandFactory.init();
+            HashMap<String,Double[]> commandsScores = factory.executeAllCommands(exam,currentStudent);
             currentStudent.setScores(commandsScores);
             printCommandsForOneStudent(currentStudent,exam.getStudents(),commandsScores);
         }
-        exam.sortStudentsByScore();
-        for(Student currentStudent : exam.getStudents()){
-            System.out.println(currentStudent.getName()+" - "+currentStudent.getMaxScore());
-        }
 
         try {
-            XLSWriter.write(exam.getStudents(),resultFolder);
+            XLSWriter.write(exam,resultFolder);
         } catch (IOException e) {
             Logger.err("Impossible d'exporter au format csv");
             Logger.err(e.getMessage());

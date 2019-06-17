@@ -27,7 +27,7 @@ public class VariableNameCommand implements IFraudCalculatorCommand {
                 } else {
                     int score=0;
                     for(String var : studentCodeVars) {
-                        if (currentStudentCodeVars.contains(var) ) {
+                        if (currentStudentCodeVars.contains(var)) {
                             Logger.info("[" + student.getName() + "][" + currentStudent.getName() + "] New common variable : " + var);
                             score+=Math.pow(var.length(),2);//On met à la puissance 2 car plus le nom de la variable est long, plus c'est louche (de maniere quadratique)
                         }

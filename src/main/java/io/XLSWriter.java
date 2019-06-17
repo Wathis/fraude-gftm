@@ -8,24 +8,29 @@ import com.vgv.excel.io.cells.TextCells;
 import com.vgv.excel.io.styles.FillPattern;
 import com.vgv.excel.io.styles.FontStyle;
 import com.vgv.excel.io.styles.ForegroundColor;
+import model.Exam;
 import model.Student;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import utils.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 public class XLSWriter {
 
 
-    public static void write(List<Student> students,String outFolderPath) throws IOException {
+    public static void write(Exam exam, String outFolderPath) throws IOException {
         File directory = new File(outFolderPath);
         if (! directory.exists()){
             directory.mkdirs();
         }
+
+        List<Student> students = exam.getStudents();
 
         if (students.size() == 0)
             return;
@@ -72,9 +77,29 @@ public class XLSWriter {
             }
             new XsWorkbook(
                     new XsSheet(rows)
-            ).saveTo(outFolderPath  + File.separator + command.replace(" ","") + ".xlsx");;
+            ).saveTo(outFolderPath  + File.separator + command.replace(" ","") + ".xlsx");
         }
+        saveRanking(exam,outFolderPath);
     }
 
 
+
+    public static void saveRanking(Exam exam,String outFolderPath) throws IOException {
+        exam.sortStudentsByScore();
+        List<Student> students  = exam.getStudents();
+        LinkedList<ERow> rankingRows = new LinkedList<>();
+        for(Student currentStudent : students){
+            Logger.info(currentStudent.getName() + " - " + currentStudent.getMaxScore());
+            rankingRows.add(new XsRow()
+                    .with(new TextCell(currentStudent.getName()))
+                    .with(new NumberCell(currentStudent.getMaxScore())));
+        }
+
+        XsRow xsRow[] = new XsRow[rankingRows.size()];
+        rankingRows.toArray(xsRow);
+        new XsWorkbook(
+                new XsSheet(xsRow)
+        ).saveTo(outFolderPath  + File.separator + "ranking" + ".xlsx");
+
+    }
 }

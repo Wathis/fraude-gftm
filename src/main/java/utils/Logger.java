@@ -43,11 +43,15 @@ public class Logger {
         String message = "["+ dateFormat.format(date) +"] " + arg + "\n";
         if (Platform.isFxApplicationThread()) {
             loggerView.appendText(message);
+            loggerView.setScrollTop(0);
+            loggerView.setScrollLeft(0);
         } else {
-            Platform.runLater(() -> loggerView.appendText(message));
+            Platform.runLater(() -> {
+                loggerView.appendText(message);
+                loggerView.setScrollTop(0);
+                loggerView.setScrollLeft(0);
+            });
         }
-        loggerView.setScrollTop(0);
-        loggerView.setScrollLeft(0);
     }
     public static void setLoggerView(TextArea textArea) {
         loggerView = textArea;

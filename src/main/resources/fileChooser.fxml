@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox  fx:controller="front.ihm.FileChooserController" prefHeight="532.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1">
+<VBox styleClass="container" fx:controller="front.ihm.FileChooserController" prefHeight="532.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="489.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
       <children>
@@ -29,22 +29,22 @@
                   <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="128.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="startButton" mnemonicParsing="false" onAction="#handleStart" prefWidth="150.0" text="Lancer l'analyse" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                  <Button fx:id="settings" mnemonicParsing="false" onAction="#settings" prefWidth="150.0" text="Paramètres" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                  <Button styleClass="whiteButton"  fx:id="startButton" mnemonicParsing="false" onAction="#handleStart" prefWidth="150.0" text="Lancer l'analyse" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Button styleClass="whiteButton"  fx:id="settings" mnemonicParsing="false" onAction="#settings" prefWidth="150.0" text="Paramètres" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
                   </Button>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="57.0" prefWidth="354.0" text="Fraundinger" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <Label styleClass="title" alignment="CENTER" contentDisplay="CENTER" prefHeight="57.0" prefWidth="354.0" text="Fraundinger" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
-                        <Font name="Futura Medium" size="50.0" />
+                        <Font name="Avenir Next LT Pro" size="50.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" onAction="#handleChooseModelZipFile" prefHeight="27.0" prefWidth="150.0" text="ZIP Modèle" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Button mnemonicParsing="false" onAction="#handleChooseStudentsZipFile" prefHeight="27.0" prefWidth="150.0" text="ZIP Élèves" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                  <Label fx:id="modelZipPathLabel" prefHeight="17.0" prefWidth="215.0" text="Aucun fichier séléctionné." GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label fx:id="studentZipPathLabel" prefHeight="17.0" prefWidth="215.0" text="Aucun fichier séléctionné." GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                   <TextArea fx:id="textAreaConsole" editable="false" prefHeight="42.0" prefWidth="372.0" style="-fx-highlight-fill: red; -fx-control-inner-background: black; -fx-highlight-text-fill: white; -fx-text-fill: white;" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                  <Button styleClass="whiteButton"  mnemonicParsing="false" onAction="#handleChooseModelZipFile" prefHeight="27.0" prefWidth="150.0" text="ZIP Modèle" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Button styleClass="whiteButton" mnemonicParsing="false" onAction="#handleChooseStudentsZipFile" prefHeight="27.0" prefWidth="150.0" text="ZIP Élèves" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Label styleClass="label" fx:id="modelZipPathLabel" prefHeight="17.0" prefWidth="215.0" text="Aucun fichier séléctionné." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label styleClass="label" fx:id="studentZipPathLabel" prefHeight="17.0" prefWidth="215.0" text="Aucun fichier séléctionné." GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                   <TextArea styleClass="console" fx:id="textAreaConsole" editable="false" prefHeight="42.0" prefWidth="372.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
                        <font>
                            <Font name="Arial" size="13.0" />
                        </font>
