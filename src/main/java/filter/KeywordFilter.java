@@ -3,6 +3,7 @@ package filter;
 import model.CompatibleLanguage;
 import model.Exam;
 import model.Student;
+import utils.Logger;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -54,19 +55,21 @@ public class KeywordFilter implements FilterVisitor {
 
     public String removeKeywordsFromCodeLine(String codeLine) {
         String newCodeLine = codeLine;
-        for (String keyword : keywords) {
-            if (newCodeLine.length() > keyword.length()) {
-                if (newCodeLine.indexOf(keyword) == 0) {
-                    newCodeLine = newCodeLine.replace(keyword + " ", "XXX ");
+        if (codeLine.length() >= 2) { // Under 2 character there is only brackets code line.
+            for (String keyword : keywords) {
+                    if (newCodeLine.indexOf(keyword) == 0) {
+                        newCodeLine = newCodeLine.replace(keyword + " ", "XXX ");
+                    }
+                    if (newCodeLine.length() > keyword.length()) {
+                        String endWord = newCodeLine.substring(newCodeLine.length() - keyword.length());
+                        if (keyword.equals(endWord)) {
+                            newCodeLine = newCodeLine.replace(" " + keyword, " XXX");
+                        }
+                        newCodeLine = newCodeLine.replace(" " + keyword + " ", " XXX ");
+                    }
+                if (newCodeLine.length() == keyword.length()) {
+                    newCodeLine = "XXX";
                 }
-                String endWord =  newCodeLine.substring(newCodeLine.length() - keyword.length());
-                if (keyword.equals(endWord)) {
-                    newCodeLine = newCodeLine.replace(" " + keyword, " XXX");
-                }
-                newCodeLine = newCodeLine.replace(" " + keyword + " ", "XXX");
-            }
-            if (newCodeLine.length() == keyword.length()) {
-                newCodeLine = "XXX";
             }
         }
         return newCodeLine;

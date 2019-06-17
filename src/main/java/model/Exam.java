@@ -46,7 +46,7 @@ public class Exam {
             }
             student.setMaxScore(max);
         }
-        Collections.sort(students, Comparator.comparing(Student::getMaxScore));
+        students.sort(Comparator.comparing(Student::getMaxScore).reversed());
         this.setStudents(students);
     }
 

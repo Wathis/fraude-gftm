@@ -20,7 +20,7 @@ public class SimilarCodeCommand implements IFraudCalculatorCommand {
     public Double[] execute(Exam exam, Student currentStudent) {
         DiffPatchMatch diffPatchMatch = new DiffPatchMatch();
         Double[] scores = new Double[exam.getStudents().size()];
-        scores[exam.getStudents().indexOf(currentStudent)] = 1.;
+        scores[exam.getStudents().indexOf(currentStudent)] = -1.;
         exam.getStudents().forEach(student -> {
             if (student != currentStudent) {
                 int score = 0;

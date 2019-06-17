@@ -15,7 +15,7 @@ public class VariableNameCommand implements IFraudCalculatorCommand {
     @Override
     public Double[] execute(Exam exam, Student currentStudent) {
         Double[] scores = new Double[exam.getStudents().size()];
-        scores[exam.getStudents().indexOf(currentStudent)] = 1.;
+        scores[exam.getStudents().indexOf(currentStudent)] = -1.;
 
         ArrayList<String> currentStudentCodeVars = getVars(String.join(" ",currentStudent.getFilesLines()));
         exam.getStudents().forEach(student -> {
@@ -24,10 +24,10 @@ public class VariableNameCommand implements IFraudCalculatorCommand {
                 int nbVar = studentCodeVars.size();
                 if(nbVar==0){
                     scores[exam.getStudents().indexOf(student)]=0.0;
-                }else{
+                } else {
                     int score=0;
                     for(String var : studentCodeVars) {
-                        if (currentStudentCodeVars.contains(var)) {
+                        if (currentStudentCodeVars.contains(var) ) {
                             Logger.info("[" + student.getName() + "][" + currentStudent.getName() + "] New common variable : " + var);
                             score+=Math.pow(var.length(),2);//On met à la puissance 2 car plus le nom de la variable est long, plus c'est louche (de maniere quadratique)
                         }

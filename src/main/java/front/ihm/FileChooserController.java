@@ -100,11 +100,13 @@ public class FileChooserController {
             addListOfFilesToPerson(student);
         });
         Teacher teacher = Unzipper.getTeacher();
-        addListOfFilesToPerson(teacher);
+        if (teacher != null) {
+            addListOfFilesToPerson(teacher);
+            exam.setProfessorLines(teacher.getFilesLines());
+        }
 
         Logger.info("Applying filter ...");
 
-        exam.setProfessorLines(teacher.getFilesLines());
         FilterFactory.getInstance().executeAllActivatedFilters(exam);
 
         Logger.info("Starting commands ...");

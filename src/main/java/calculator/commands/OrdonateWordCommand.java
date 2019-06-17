@@ -16,7 +16,7 @@ public class OrdonateWordCommand implements IFraudCalculatorCommand {
     public Double[] execute(Exam exam, Student currentStudent) {
         DiffPatchMatch diffPatchMatch = new DiffPatchMatch();
         Double[] scores = new Double[exam.getStudents().size()];
-        scores[exam.getStudents().indexOf(currentStudent)] = 1.;
+        scores[exam.getStudents().indexOf(currentStudent)] = -1.;
 
         String[] notWords={};//Sert a bannir des mots de la recherche (au cas où il y ai certain groupes de caractère
                              // qu'on ne veut pas considérer comme des mots à débugger

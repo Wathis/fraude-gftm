@@ -46,8 +46,9 @@ public class Logger {
         } else {
             Platform.runLater(() -> loggerView.appendText(message));
         }
+        loggerView.setScrollTop(0);
+        loggerView.setScrollLeft(0);
     }
-
     public static void setLoggerView(TextArea textArea) {
         loggerView = textArea;
     }
