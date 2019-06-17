@@ -29,7 +29,7 @@
                   <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="128.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button styleClass="whiteButton"  fx:id="startButton" mnemonicParsing="false" onAction="#handleStart" prefWidth="150.0" text="Lancer l'analyse" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Button disable="true" styleClass="whiteButton"  fx:id="startButton" mnemonicParsing="false" onAction="#handleStart" prefWidth="150.0" text="Lancer l'analyse" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                   <Button styleClass="whiteButton"  fx:id="settings" mnemonicParsing="false" onAction="#settings" prefWidth="150.0" text="Paramètres" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                      <GridPane.margin>
                         <Insets />
